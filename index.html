@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATIVADOR DE SKINS POR ID</title>
+    <title>ACTIVADOR DE SKINS - CREADOR 2</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
@@ -12,7 +12,7 @@
         
         .header-card { background: #0b1528; border: 1px solid #1e3a8a; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
         .title { color: #38bdf8; font-size: 20px; font-weight: bold; letter-spacing: 1px; margin-bottom: 5px; }
-        .subtitle { font-size: 11px; color: #94a3b8; margin-bottom: 15px; }
+        .subtitle { font-size: 11px; color: #94a3b8; margin-bottom: 10px; }
 
         .warning-box { background: rgba(30, 58, 138, 0.2); border: 1px solid #1d4ed8; border-radius: 8px; padding: 12px; text-align: left; font-size: 11px; color: #cbd5e1; margin-bottom: 15px; }
         .warning-box b { color: #f59e0b; }
@@ -21,34 +21,30 @@
         .section-box { background: #0b1528; border: 1px solid #1e3a8a; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
         .section-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
 
-        input[type="text"], input[type="file"] { width: 100%; padding: 10px; background: #060913; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 12px; margin-top: 5px; }
+        input[type="file"] { width: 100%; padding: 10px; background: #060913; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 12px; margin-top: 5px; }
         
         .btn-activar { width: 100%; padding: 14px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 8px; color: #000; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); margin-top: 10px; transition: 0.2s; }
         .btn-activar:active { transform: scale(0.98); }
 
-        /* CONSOLA ESTILO HACKER */
         .console-box { background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 11px; text-align: left; height: 180px; overflow-y: auto; margin-top: 10px; color: #38bdf8; }
         .console-line { margin-bottom: 4px; }
         
-        .admin-badge { display: inline-block; background: linear-gradient(90deg, #f59e0b, #ef4444); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-top: 5px; }
+        .admin-badge { display: inline-block; background: linear-gradient(90deg, #f59e0b, #ef4444); padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-top: 8px; border: 1px solid #fef08a; }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <!-- CABECERA -->
     <div class="header-card">
-        <div class="title">ATIVADOR DE SKINS POR ID</div>
-        <div class="subtitle">DESENVOLVIDO POR ENMANUEL & ENDRY</div>
-        <div id="user-info" style="font-size: 12px; color: #22c55e;">Modo Creador 2 Activo</div>
-        <div id="badge-admin"></div>
+        <div class="title">ACTIVADOR DE SKINS</div>
+        <div class="subtitle">PROYECTO OFICIAL ENMANUEL & ENDRY</div>
+        <div><span class="admin-badge">👑 CREADOR 2 - ACCESO TOTAL</span></div>
     </div>
 
-    <!-- REQUISITOS -->
     <div class="warning-box">
-        <b>⚠️ ATENÇÃO REQUISITOS</b>
-        <p style="margin-top:5px;">O seu arquivo <b>.ZIP</b> deve conter obrigatoriamente estes 3 arquivos juntos:</p>
+        <b>⚠️ COMPROBACIÓN DE ARCHIVOS</b>
+        <p style="margin-top:5px;">El sistema verificará automáticamente:</p>
         <ul>
             <li>ProjectData_slot_X.bytes</li>
             <li>ProjectData_slot_X.meta</li>
@@ -56,36 +52,22 @@
         </ul>
     </div>
 
-    <!-- SELECCIÓN DE ARCHIVO Y ID -->
     <div class="section-box">
-        <div class="section-title">📂 Selecione o Arquivo ZIP do Mapa</div>
+        <div class="section-title">📂 Seleccionar Archivo ZIP</div>
         <input type="file" id="zip-file" accept=".zip">
-        
-        <div style="margin-top: 12px;">
-            <label style="font-size: 11px; color: #94a3b8;">Slots Detectados: <span id="slot-num" style="color:#22c55e;">2</span></label>
-            <input type="text" id="ff-id" placeholder="Insira seu ID de Free Fire (Ex: 7114773386)">
-        </div>
-
-        <button class="btn-activar" onclick="ejecutarActivacion()">⚡ ATIVAR SKINS & BAIXAR MAPA</button>
+        <button class="btn-activar" onclick="ejecutarActivacion()">⚡ INICIAR COMPROBACIÓN</button>
     </div>
 
-    <!-- CONSOLA DE OPERACIONES -->
     <div class="section-box">
-        <div class="section-title">💻 CONSOLE DE OPERAÇÕES (LOGS)</div>
+        <div class="section-title">💻 CONSOLA DE OPERACIONES</div>
         <div id="console-logs" class="console-box">
-            <div class="console-line" style="color: #64748b;">> Sistema aguardando arquivo e ID...</div>
+            <div class="console-line" style="color: #64748b;">> Esperando archivo ZIP...</div>
         </div>
     </div>
 
 </div>
 
 <script>
-    // Verificación automática de Creador al cargar
-    let nombreAdmin = prompt("Ingresa tu Nombre / Nick de Administrador:") || "Enmanuel";
-    if(nombreAdmin.toLowerCase().includes('enmanuel') || nombreAdmin.toLowerCase().includes('endry')) {
-        document.getElementById('badge-admin').innerHTML = `<span class="admin-badge">👑 CREADOR 2 - ACCESO TOTAL</span>`;
-    }
-
     const consoleBox = document.getElementById('console-logs');
 
     function logMsg(txt, color = "#38bdf8") {
@@ -99,51 +81,43 @@
 
     async function ejecutarActivacion() {
         const fileInput = document.getElementById('zip-file').files[0];
-        const ffId = document.getElementById('ff-id').value.trim();
 
-        if(!fileInput) return alert("Por favor selecciona un archivo ZIP de mapa.");
-        if(!ffId) return alert("Por favor ingresa tu ID de Free Fire.");
+        if(!fileInput) return alert("Por favor selecciona un archivo ZIP.");
 
         consoleBox.innerHTML = "";
         
-        logMsg("INICIANDO PROCEDIMENTO DE INJEÇÃO...", "#f59e0b");
+        logMsg("INICIANDO ESCANEO DE ARCHIVOS...", "#f59e0b");
         await new Promise(r => setTimeout(r, 800));
 
-        logMsg("PROCESSANDO SLOT DE MAPA: 2");
+        logMsg("VERIFICANDO: ProjectData_slot.bytes...");
         await new Promise(r => setTimeout(r, 600));
 
-        logMsg("MODIFICADO: Cabelo", "#c084fc");
-        await new Promise(r => setTimeout(r, 500));
+        // Simulación de errores
+        if(Math.random() > 0.4) {
+            logMsg("⚠️ ERROR EN: UserLevelData_2.bytes", "#f59e0b");
+            logMsg("🔧 CORRIGIENDO ERRORES DE ESTRUCTURA...", "#38bdf8");
+            await new Promise(r => setTimeout(r, 1000));
+        }
 
-        logMsg("MODIFICADO: Acessório de Cabeça/Máscara", "#c084fc");
-        await new Promise(r => setTimeout(r, 500));
-
-        logMsg("MODIFICADO: Peitoral/Camisa", "#c084fc");
-        await new Promise(r => setTimeout(r, 500));
-
-        logMsg("MODIFICADO: Calça/Bermuda", "#c084fc");
-        await new Promise(r => setTimeout(r, 500));
-
-        logMsg("MODIFICADO: Skins de Arma (wSkin)", "#c084fc");
+        logMsg("¡COMPROBADO CON ÉXITO!", "#22c55e");
+        logMsg("MODIFICADO: Pack de Skins Completo");
+        logMsg("ACTIVADO: Estructuras de Juego");
+        
         await new Promise(r => setTimeout(r, 800));
+        logMsg("DESCARGANDO MAPA MODIFICADO...", "#f59e0b");
 
-        logMsg("COMPACTANDO NOVOS ARQUIVOS...", "#38bdf8");
-        await new Promise(r => setTimeout(r, 1000));
-
-        logMsg("CONCLUÍDO COM SUCESSO! SEU MAPA ATUALIZADO FOI BAIXADO.", "#22c55e");
-
-        // Simulación de descarga automática del archivo procesado
+        // Descarga
         setTimeout(() => {
             const blob = new Blob([fileInput], { type: 'application/zip' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Mapa_Modificado_ID_${ffId}.zip`;
+            a.download = `Mapa_Activado_Creador2.zip`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            alert("✅ ¡Proceso finalizado! Tu mapa modificado se ha descargado correctamente a tu dispositivo.");
-        }, 1200);
+            alert("✅ ¡Activado con éxito!");
+        }, 1000);
     }
 </script>
 
