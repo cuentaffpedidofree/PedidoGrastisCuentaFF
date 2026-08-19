@@ -3,62 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FFATTCUENTA - Juego Oficial</title>
+    <title>FFATTCUENTA - Plataforma Gaming</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
         body { background: #080b12; color: white; text-align: center; padding: 15px; min-height: 100vh; }
 
-        /* PANTALLA DE CARGA (LOADING) */
-        #screen-loading {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #080b12; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
-        }
-        .game-title { font-family: 'Orbitron', sans-serif; font-size: 28px; color: #ff4655; text-shadow: 0 0 15px rgba(255, 70, 85, 0.6); margin-bottom: 20px; }
-        .progress-bar-bg { width: 80%; max-width: 300px; height: 12px; background: #1e293b; border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
-        .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff4655, #ff8533); transition: width 0.1s linear; }
-
-        /* CONTENEDORES Y TARJETAS */
-        .card { background: rgba(15, 23, 42, 0.9); border-radius: 12px; padding: 20px; max-width: 420px; margin: 15px auto; border: 1px solid rgba(255, 70, 85, 0.3); }
+        .game-title { font-family: 'Orbitron', sans-serif; font-size: 26px; color: #ff4655; text-shadow: 0 0 15px rgba(255, 70, 85, 0.6); margin-bottom: 15px; }
+        .card { background: rgba(15, 23, 42, 0.95); border-radius: 12px; padding: 20px; max-width: 450px; margin: 15px auto; border: 1px solid rgba(255, 70, 85, 0.3); }
+        
         .stat-box { display: flex; justify-content: space-around; background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #334155; }
         .stat-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
         .stat-val { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: bold; color: #38bdf8; }
 
-        /* BOTONES */
         button {
             width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4655 0%, #b91c1c 100%);
             border: none; border-radius: 8px; color: white; font-family: 'Orbitron', sans-serif;
-            font-size: 14px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin: 5px 0;
+            font-size: 13px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin: 5px 0;
             box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
         }
         button:active { transform: scale(0.98); }
-        button.btn-blue { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); }
-        button.btn-green { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3); }
+        button.btn-blue { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); }
+        button.btn-green { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); }
+        button.btn-purple { background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%); }
 
         input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; font-size: 14px; text-align: center; }
         .hidden { display: none !important; }
+        
+        /* Estilos de Tienda / Tarjetas */
+        .item-card { background: #0f172a; border: 1px solid #334155; padding: 10px; border-radius: 8px; margin-bottom: 10px; text-align: left; }
+        .item-title { font-weight: bold; color: #38bdf8; }
     </style>
 </head>
 <body>
 
-    <!-- 1. PANTALLA DE CARGA INICIAL -->
-    <div id="screen-loading">
+    <!-- 1. PANTALLA DE LOGIN / REGISTRO -->
+    <div id="sec-login" class="card">
         <h1 class="game-title">FFATTCUENTA</h1>
-        <div class="progress-bar-bg">
-            <div id="loading-bar" class="progress-bar-fill"></div>
-        </div>
-        <p id="loading-text" style="margin-top: 10px; color: #64748b; font-size: 12px;">Cargando juego... (0%)</p>
-        <button onclick="cerrarCarga()" style="width: auto; margin-top: 20px; padding: 6px 15px; font-size: 11px; background: #334155;">Saltar Carga ⏩</button>
+        <h3>Iniciar Sesión</h3>
+        <p style="font-size: 12px; color: #94a3b8; margin-bottom: 15px;">Ingresa tu correo real para sincronizar tu cuenta.</p>
+        
+        <form id="form-auth">
+            <input type="text" id="auth-name" placeholder="Tu Nombre o Nick" required>
+            <input type="email" id="auth-email" placeholder="correo@ejemplo.com" required>
+            <button type="submit" class="btn-green">ENTRAR AL JUEGO</button>
+        </form>
     </div>
 
-    <!-- 2. JUEGO PRINCIPAL -->
-    <div id="screen-game" class="hidden">
+    <!-- 2. PANEL PRINCIPAL DEL JUEGO -->
+    <div id="sec-main" class="hidden">
         
         <div class="card">
-            <h1 class="game-title" style="font-size: 22px; margin-bottom: 10px;">FFATTCUENTA</h1>
-            
-            <!-- MARCADOR DE MONEDAS -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span id="user-display" style="font-size:13px; color:#94a3b8;">Jugador: ---</span>
+                <button onclick="cerrarSesion()" style="width:auto; padding:5px 10px; font-size:10px; background:#334155;">Salir</button>
+            </div>
+
+            <!-- MARCADOR COMPARTIDO -->
             <div class="stat-box">
                 <div>
                     <div class="stat-title">AttCoins</div>
@@ -70,99 +71,104 @@
                 </div>
             </div>
 
-            <!-- NAVEGACIÓN -->
-            <button class="btn-blue" onclick="mostrarSeccion('juego')">🎮 Minijuego</button>
-            <button class="btn-blue" onclick="mostrarSeccion('amigos')">👥 Jugar con Amigo</button>
-            <button class="btn-blue" onclick="mostrarSeccion('tienda')">🛒 Tienda de Diamantes</button>
-            <button class="btn-blue" onclick="mostrarSeccion('canje')">🎁 Canjear Código</button>
+            <!-- MENU DE NAVEGACIÓN -->
+            <button class="btn-blue" onclick="mostrarSeccion('minijuego')">🎰 Ruleta Afortunada</button>
+            <button class="btn-blue" onclick="mostrarSeccion('tarjetas')">💳 Tarjetas Virtuales</button>
+            <button class="btn-purple" onclick="mostrarSeccion('tienda-diamantes')">🛍️ Gastar Diamantes</button>
         </div>
 
-        <!-- SECCIÓN: MINIJUEGO -->
-        <div id="sec-juego" class="card">
-            <h3>🎯 Minijuego de Entrenamiento</h3>
-            <p style="font-size: 13px; color: #94a3b8; margin: 10px 0;">Toca el botón rápido para acumular AttCoins.</p>
-            <button onclick="sumarAttCoins()" class="btn-green" style="font-size: 18px; padding: 18px;">¡TAP PARA GANAR 🪙!</button>
+        <!-- SECCIÓN: MINIJUEGO RULETA -->
+        <div id="sec-minijuego" class="card hidden">
+            <h3>🎰 Ruleta de la Suerte</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin: 10px 0;">Cuesta 10 AttCoins 🪙 girar la ruleta.</p>
+            
+            <div id="ruleta-box" style="font-size: 30px; margin: 15px 0; background:#0f172a; padding:15px; border-radius:8px;">❓</div>
+            <button onclick="girarRuleta()" class="btn-green">GIRAR (10 🪙)</button>
+            <button onclick="ganarCoinsGratis()" style="background:#334155; margin-top:8px;">Obtener 🪙 Gratis</button>
         </div>
 
-        <!-- SECCIÓN: JUGAR CON AMIGO -->
-        <div id="sec-amigos" class="card hidden">
-            <h3>👥 Modo Sala Multijugador</h3>
-            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Juega en privado creando o uniéndote a una sala.</p>
+        <!-- SECCIÓN: TARJETAS VIRTUALES DE DIAMANTES -->
+        <div id="sec-tarjetas" class="card hidden">
+            <h3>💳 Generador de Tarjetas Virtuales</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Canjea tus AttCoins por códigos de Tarjetas de Diamantes.</p>
 
-            <button onclick="crearSala()" class="btn-green">Crear Nueva Sala</button>
-            <div id="box-sala-creada" class="hidden" style="margin: 10px 0; background: #0f172a; padding: 10px; border-radius: 8px;">
-                <p style="font-size: 12px; color: #94a3b8;">Código de Sala:</p>
-                <h2 id="sala-codigo" style="color: #ff4655; font-family: 'Orbitron';">---</h2>
-                <p style="font-size: 11px; color: #22c55e; margin-top: 5px;">Esperando a tu amigo...</p>
+            <button onclick="generarTarjeta(50, 100)">Tarjeta 100 💎 (Cuesta 50 🪙)</button>
+            <button onclick="generarTarjeta(100, 250)">Tarjeta 250 💎 (Cuesta 100 🪙)</button>
+
+            <div id="box-tarjeta-resultado" class="hidden" style="margin-top:15px; background:#0f172a; padding:12px; border-radius:8px; border: 1px dashed #22c55e;">
+                <p style="font-size:11px; color:#94a3b8;">Código de Tarjeta Generado:</p>
+                <h3 id="codigo-tarjeta" style="color:#22c55e; font-family:'Orbitron'; margin:5px 0;">---</h3>
+                <button onclick="reclamarTarjetaGenerada()" class="btn-green" style="font-size:11px; padding:6px;">Reclamar Diamantes Ahora</button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: GASTAR DIAMANTES -->
+        <div id="sec-tienda-diamantes" class="card hidden">
+            <h3>🛍️ Tienda de Diamantes</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Gasta tus diamantes en recompensas del juego.</p>
+
+            <div class="item-card">
+                <div class="item-title">🔥 Pase de Batalla VIP</div>
+                <p style="font-size:12px; color:#94a3b8;">Precio: 150 Diamantes 💎</p>
+                <button onclick="comprarItem('Pase VIP', 150)">Comprar</button>
             </div>
 
-            <hr style="border-color: #334155; margin: 15px 0;">
-
-            <input type="text" id="input-sala-unirse" placeholder="Ingresa Código de Sala">
-            <button onclick="unirseASala()">Unirse a Sala</button>
-        </div>
-
-        <!-- SECCIÓN: TIENDA -->
-        <div id="sec-tienda" class="card hidden">
-            <h3>🛒 Tienda de Canje Interno</h3>
-            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Cambia tus AttCoins ganadas por Diamantes.</p>
-
-            <button onclick="canjear(20, 10)">20 AttCoins 🪙 ➔ 10 Diamantes 💎</button>
-            <button onclick="canjear(100, 60)">100 AttCoins 🪙 ➔ 60 Diamantes 💎</button>
-        </div>
-
-        <!-- SECCIÓN: CANJEAR CÓDIGOS -->
-        <div id="sec-canje" class="card hidden">
-            <h3>🎁 Apartado de Canje</h3>
-            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Ingresa tus códigos de regalo promocionales.</p>
-            
-            <input type="text" id="input-codigo" placeholder="Escribe el código (Ej: TUNKYFREE)">
-            <button onclick="reclamarCodigo()" class="btn-green">RECLAMAR RECOMPENSA</button>
+            <div class="item-card">
+                <div class="item-title">📦 Caja Sorpresa Legendaria</div>
+                <p style="font-size:12px; color:#94a3b8;">Precio: 50 Diamantes 💎</p>
+                <button onclick="comprarItem('Caja Sorpresa', 50)">Comprar</button>
+            </div>
         </div>
 
     </div>
 
 <script>
-    // FUNCIÓN PARA CERRAR LA PANTALLA DE CARGA DE FORMA SEGURA
-    function cerrarCarga() {
-        const screenLoading = document.getElementById('screen-loading');
-        const screenGame = document.getElementById('screen-game');
-        if (screenLoading && screenGame) {
-            screenLoading.classList.add('hidden');
-            screenGame.classList.remove('hidden');
+    // ESTADO DEL USUARIO Y MONEDAS
+    let usuarioActual = JSON.parse(localStorage.getItem('ff_sesion')) || null;
+    let attCoins = parseInt(localStorage.getItem('ff_attcoins')) || 20;
+    let diamantes = parseInt(localStorage.getItem('ff_diamantes')) || 0;
+    let codigoTarjetaTemp = 0;
+
+    // VALIDACIÓN DE LOGIN
+    document.getElementById('form-auth').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('auth-name').value.trim();
+        const email = document.getElementById('auth-email').value.trim().toLowerCase();
+
+        // Comprobación de Correo Válido (Regex)
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        // Dominios prohibidos/falsos
+        const dominiosProhibidos = ['test.com', 'falso.com', 'hola.com', 'inverti.com', 'ejemplo.com'];
+        const dominioIngresado = email.split('@')[1];
+
+        if (!regexEmail.test(email)) {
+            return alert("Ingresa un formato de correo válido (ejemplo: usuario@gmail.com).");
+        }
+
+        if (dominiosProhibidos.includes(dominioIngresado)) {
+            return alert("Por favor ingresa un correo real, no se permiten correos de prueba o inventados.");
+        }
+
+        // Iniciar Sesión Exitosamente
+        usuarioActual = { nombre, email };
+        localStorage.setItem('ff_sesion', JSON.stringify(usuarioActual));
+        cargarPanelJuego();
+    });
+
+    function cargarPanelJuego() {
+        if (usuarioActual) {
+            document.getElementById('sec-login').classList.add('hidden');
+            document.getElementById('sec-main').classList.remove('hidden');
+            document.getElementById('user-display').innerText = `Jugador: ${usuarioActual.nombre}`;
+            actualizarMarcador();
         }
     }
 
-    // INICIAR ANIMACIÓN DE CARGA AL CARGAR LA PÁGINA
-    window.addEventListener('DOMContentLoaded', () => {
-        let progress = 0;
-        const loadingBar = document.getElementById('loading-bar');
-        const loadingText = document.getElementById('loading-text');
-
-        const loadingInterval = setInterval(() => {
-            progress += 10;
-            if (loadingBar) loadingBar.style.width = progress + '%';
-            if (loadingText) loadingText.innerText = `Cargando juego... (${progress}%)`;
-
-            if (progress >= 100) {
-                clearInterval(loadingInterval);
-                cerrarCarga();
-            }
-        }, 100);
-
-        // Límite de seguridad: si pasados 3 segundos no ha cargado, fuerza el cierre de la pantalla de carga
-        setTimeout(() => {
-            clearInterval(loadingInterval);
-            cerrarCarga();
-        }, 3000);
-    });
-
-    // DATOS Y VARIABLES
-    let attCoins = parseInt(localStorage.getItem('ff_attcoins')) || 0;
-    let diamantes = parseInt(localStorage.getItem('ff_diamantes')) || 0;
-    let codigosUsados = JSON.parse(localStorage.getItem('ff_codigos')) || [];
-
-    actualizarMarcador();
+    function cerrarSesion() {
+        localStorage.removeItem('ff_sesion');
+        location.reload();
+    }
 
     function actualizarMarcador() {
         document.getElementById('val-attcoins').innerText = attCoins + ' 🪙';
@@ -171,66 +177,73 @@
         localStorage.setItem('ff_diamantes', diamantes);
     }
 
-    function sumarAttCoins() {
-        attCoins += 1;
-        actualizarMarcador();
-    }
-
     function mostrarSeccion(sec) {
-        document.getElementById('sec-juego').classList.add('hidden');
-        document.getElementById('sec-amigos').classList.add('hidden');
-        document.getElementById('sec-tienda').classList.add('hidden');
-        document.getElementById('sec-canje').classList.add('hidden');
+        document.getElementById('sec-minijuego').classList.add('hidden');
+        document.getElementById('sec-tarjetas').classList.add('hidden');
+        document.getElementById('sec-tienda-diamantes').classList.add('hidden');
 
         document.getElementById('sec-' + sec).classList.remove('hidden');
     }
 
-    // MULTIJUGADOR (SISTEMA DE SALAS)
-    function crearSala() {
-        const codigoRandom = 'SALA-' + Math.floor(1000 + Math.random() * 9000);
-        document.getElementById('sala-codigo').innerText = codigoRandom;
-        document.getElementById('box-sala-creada').classList.remove('hidden');
+    // MINIJUEGO RULETA
+    function ganarCoinsGratis() {
+        attCoins += 10;
+        actualizarMarcador();
+        alert("¡Recibiste 10 AttCoins 🪙 de regalo!");
     }
 
-    function unirseASala() {
-        const cod = document.getElementById('input-sala-unirse').value.trim();
-        if (!cod) return alert("Escribe un código de sala válido.");
-        alert("¡Te has unido con éxito a la sala " + cod.toUpperCase() + "!");
-        document.getElementById('input-sala-unirse').value = '';
+    function girarRuleta() {
+        if (attCoins < 10) return alert("Necesitas al menos 10 AttCoins 🪙 para girar.");
+        
+        attCoins -= 10;
+        actualizarMarcador();
+
+        const opciones = ['💎 +20 Diamantes', '🪙 +30 AttCoins', '❌ Nada', '💎 +50 Diamantes'];
+        const resultado = opciones[Math.floor(Math.random() * opciones.length)];
+        
+        document.getElementById('ruleta-box').innerText = resultado;
+
+        if (resultado.includes('+20 Diamantes')) diamantes += 20;
+        if (resultado.includes('+50 Diamantes')) diamantes += 50;
+        if (resultado.includes('+30 AttCoins')) attCoins += 30;
+
+        actualizarMarcador();
     }
 
-    // CANJEAR ATTCOINS POR DIAMANTES
-    function canjear(costoCoins, diamantesGanados) {
-        if (attCoins >= costoCoins) {
-            attCoins -= costoCoins;
-            diamantes += diamantesGanados;
+    // TARJETAS VIRTUALES DE DIAMANTES
+    function generarTarjeta(costoCoins, diamantesPremio) {
+        if (attCoins < costoCoins) return alert("No tienes suficientes AttCoins para generar esta tarjeta.");
+
+        attCoins -= costoCoins;
+        codigoTarjetaTemp = diamantesPremio;
+        actualizarMarcador();
+
+        const codigoGenerado = "CARD-" + Math.floor(100000 + Math.random() * 900000);
+        document.getElementById('codigo-tarjeta').innerText = codigoGenerado;
+        document.getElementById('box-tarjeta-resultado').classList.remove('hidden');
+    }
+
+    function reclamarTarjetaGenerada() {
+        diamantes += codigoTarjetaTemp;
+        codigoTarjetaTemp = 0;
+        actualizarMarcador();
+        document.getElementById('box-tarjeta-resultado').classList.add('hidden');
+        alert("🎉 ¡Tarjeta canjeada con éxito! Diamantes añadidos a tu saldo.");
+    }
+
+    // GASTAR DIAMANTES EN LA TIENDA
+    function comprarItem(nombreItem, costoDiamantes) {
+        if (diamantes >= costoDiamantes) {
+            diamantes -= costoDiamantes;
             actualizarMarcador();
-            alert(`¡Canje exitoso! Obtuviste ${diamantesGanados} Diamantes 💎`);
+            alert(`¡Compraste [${nombreItem}] con éxito! 💎`);
         } else {
-            alert("No tienes suficientes AttCoins. ¡Juega más en el minijuego!");
+            alert("No tienes suficientes Diamantes para esta compra.");
         }
     }
 
-    // CÓDIGOS DE RECOMPENSA
-    function reclamarCodigo() {
-        const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
-        if (!cod) return alert("Ingresa un código.");
-
-        if (codigosUsados.includes(cod)) {
-            return alert("Ya usaste este código previamente.");
-        }
-
-        if (cod === "TUNKYFREE") {
-            diamantes += 100;
-            codigosUsados.push(cod);
-            localStorage.setItem('ff_codigos', JSON.stringify(codigosUsados));
-            actualizarMarcador();
-            alert("🎉 ¡Recompensa reclamada! +100 Diamantes 💎");
-        } else {
-            alert("Código inválido.");
-        }
-        document.getElementById('input-codigo').value = '';
-    }
+    // Autologin si ya ingresó antes
+    if (usuarioActual) cargarPanelJuego();
 </script>
 
 </body>
