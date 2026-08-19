@@ -1,302 +1,214 @@
-<!doctype html>
-<html lang="pt-br">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ATIVAR SKINS</title>
-  <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-.container { background: #0f1222; width: 100%; max-width: 450px; padding: 30px 25px; border-radius: 20px; box-shadow: 0 0 25px rgba(0,0,0,0.6); position: relative; }
-        h1 { text-align: center; color: #fca311; font-size: 28px; font-weight: 900; margin-bottom: 5px; letter-spacing: 1px; }
-.sub { text-align: center; color: #fca311; font-size: 12px; letter-spacing: 1px; margin-bottom: 20px; }
-.box { background: #151933; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
-.box-title { color: #fca311; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; font-size: 14px; }
-.box p { font-size: 13px; color: #c0c5d6; line-height: 1.6; }
-.box p code { color: #4da3ff; background: #0a0c1a; padding: 2px 4px; border-radius: 4px; }
-.file-box { text-align: center; }
-        input[type="file"] { width: 100%; padding: 12px; border: 2px dashed #2a2f55; border-radius: 8px; background: #0f1222; color: #aaa; cursor: pointer; font-size: 13px; }
-        input[type="file"]::file-selector-button { background: #2a2f55; border: none; padding: 8px 12px; border-radius: 6px; color: #fff; cursor: pointer; margin-right: 10px; }
-        button { width: 100%; padding: 14px; border: none; border-radius: 10px; background: #fca311; color: #000; font-weight: 900; font-size: 15px; cursor: pointer; margin-top: 15px; transition: 0.2s; }
-        button:hover { filter: brightness(1.1); transform: scale(1.02); }
-        button:disabled { background: #555; cursor: not-allowed; }
-.tiktok { background: #000; color: #fff; border: 1px solid #333; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; }
-.tiktok:hover { background: #111; }
-.discord { background: #5865F2; color: #fff; border: none; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; }
-.discord:hover { background: #4752C4; }
-.asset-code { background: #151933; padding: 10px; border-radius: 6px; font-family: 'Consolas', monospace; font-size: 12px; color: #4da3ff; word-break: break-all; margin-bottom: 10px; text-align: center; }
-.btn-copiar { background: #2a2f55; color: #fff; font-size: 13px; padding: 10px; margin-top: 0; }
-.btn-copiar.copiado { background: #00ff88; color: #000; }
-.modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
-.modal-content { background: #0d1121; border: 2px solid #fca311; border-radius: 12px; width: 90%; max-width: 420px; padding: 20px; color: #fff; box-shadow: 0 0 30px rgba(252,163,17,0.3); }
-.modal-header { text-align: center; font-weight: 900; font-size: 16px; margin-bottom: 12px; color: #fff; }
-.slot-id { background: #151933; border: 1px solid #fca311; border-radius: 8px; padding: 10px; text-align: center; font-weight: 900; color: #fca311; margin-bottom: 8px; }
-.operador { text-align: center; font-size: 12px; color: #fca311; margin-bottom: 15px; }
-.console-log { background: #070a14; border-radius: 8px; padding: 12px; height: 220px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 13px; margin-bottom: 15px; }
-.console-log p { margin: 4px 0; display: flex; gap: 6px; }
-.console-log.arrow { color: #fca311; font-weight: bold; }
-.btn-fechar { width: 100%; padding: 12px; background: #fca311; color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; }
-.btn-fechar:disabled { background: #555; cursor: not-allowed; opacity: 0.6; }
-   /* MODAL ASSETS MENOR */
-.asset-modal-content { background: #0d1121; border: 2px solid #fca311; border-radius: 12px; width: 92%; max-width: 340px; max-height: 80vh; padding: 14px; color: #fff; box-shadow: 0 0 30px rgba(252,163,17,0.3); overflow-y: auto; }
-.asset-modal-list { display: flex; flex-direction: column; gap: 10px; }
-.asset-item { background: #151933; padding: 10px; border-radius: 8px; }
-.asset-item-title { color: #fca311; font-weight: 700; font-size: 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
-.asset-item img { width: 100%; border-radius: 6px; margin-bottom: 6px; }
-.aviso-content { text-align: center; }
-.aviso-icon { font-size: 40px; margin-bottom: 10px; }
-.aviso-text { font-size: 13px; color: #c0c5d6; line-height: 1.6; margin-bottom: 15px; }
-.aviso-lista { background: #151933; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: left; }
-.aviso-item { display: flex; justify-content: space-between; margin: 5px 0; font-size: 13px; }
-.aviso-item span:first-child { color: #fca311; font-weight: 700; }
-.aviso-item span:last-child { color: #ff8c00; font-weight: 900; }
-.erro-content { text-align: center; border-color: #ff4d4d; }
-.erro-icon { font-size: 40px; margin-bottom: 10px; color: #ff4d4d; }
-.erro-text { font-size: 13px; color: #c0c5d6; line-height: 1.6; margin-bottom: 15px; }
-.erro-lista { background: #151933; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: left; }
-.erro-item { display: flex; justify-content: space-between; align-items: center; margin: 6px 0; font-size: 13px; }
-.erro-item span:first-child { color: #c0c5d6; }
-.erro-ok { color: #00ff88; font-weight: 900; }
-.erro-x { color: #ff4d4d; font-weight: 900; }
-.btn-erro { background: #ff4d4d; color: #fff; }
-.nada-content { text-align: center; border-color: #ff4d4d; }
-.nada-icon { font-size: 40px; margin-bottom: 10px; color: #ff4d4d; }
-.manutencao-content { text-align: center; border-color: #fca311; }
-.manutencao-icon { font-size: 40px; margin-bottom: 10px; color: #fca311; }
-.download-nome { background: #151933; padding: 10px; border-radius: 8px; text-align: center; color: #4da3ff; font-family: 'Consolas'; font-size: 12px; margin-top: 10px; border: 1px solid #2a2f55; }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FFATTCUENTA - Juego Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
+        body { background: #080b12; color: white; text-align: center; padding: 15px; min-height: 100vh; }
 
-  /* Animação dos 3 pontinhos */
-  @keyframes loadingDots {
-    0% { content: ""; }
-    33% { content: "."; }
-    66% { content: ".."; }
-    100% { content: "..."; }
-  }
-.loading-dots::after {
-    content: "";
-    display: inline-block;
-    width: 1em;
-    animation: loadingDots 1.2s infinite steps(1);
-  }
+        /* PANTALLA DE CARGA (LOADING) */
+        #screen-loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #080b12; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 999;
+        }
+        .game-title { font-family: 'Orbitron', sans-serif; font-size: 28px; color: #ff4655; text-shadow: 0 0 15px rgba(255, 70, 85, 0.6); margin-bottom: 20px; }
+        .progress-bar-bg { width: 80%; max-width: 300px; height: 12px; background: #1e293b; border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
+        .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff4655, #ff8533); transition: width 0.1s; }
+
+        /* CONTENEDORES Y TARJETAS */
+        .card { background: rgba(15, 23, 42, 0.9); border-radius: 12px; padding: 20px; max-width: 420px; margin: 15px auto; border: 1px solid rgba(255, 70, 85, 0.3); }
+        .stat-box { display: flex; justify-content: space-around; background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #334155; }
+        .stat-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        .stat-val { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: bold; color: #38bdf8; }
+
+        /* BOTONES */
+        button {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4655 0%, #b91c1c 100%);
+            border: none; border-radius: 8px; color: white; font-family: 'Orbitron', sans-serif;
+            font-size: 14px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin: 5px 0;
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+        }
+        button:active { transform: scale(0.98); }
+        button.btn-blue { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); }
+        button.btn-green { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3); }
+
+        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; font-size: 14px; text-align: center; }
+        .hidden { display: none; }
     </style>
- </head>
- <body>
-  <div class="container">
-   <h1>ATIVAR SKINS</h1>
-   <p class="sub">DESENVOLVIDO POR @THEUSSYT</p>
-   <div class="box">
-    <div class="box-title">⚠️ ATENÇÃO</div>
-    <p>O ZIP precisa conter os 3 arquivos do mesmo slot:</p>
-    <p>• <code>ProjectData_slot_X.meta</code></p>
-    <p>• <code>ProjectData_slot_X.bytes</code></p>
-    <p>• <code>UserLevelData_X.bytes</code></p>
-   </div>
-   <div class="box file-box">
-    <div class="box-title">📁 Selecionar ZIP</div>
-    <input type="file" id="fileInput" accept=".zip">
-   </div>
-   <button id="btnProcessar">⚡ ATIVAR SKINS &amp; BAIXAR</button>
-   <button class="tiktok" onclick="window.open('https://www.tiktok.com/@theussyt','_blank')">🎵 TIKTOK</button>
-   <button class="discord" onclick="window.open('https://discord.gg/37FKHSm4G','_blank')">💬 DISCORD</button>
-  </div>
-  <div id="consoleModal" class="modal">
-   <div class="modal-content">
-    <div class="modal-header">💻 CONSOLE</div>
-    <div id="consoleSlotId" class="slot-id">SLOT: - | ID: -</div>
-    <div class="operador">SISTEMA @THEUSSYT</div>
-    <div id="consoleLog" class="console-log"></div>
-    <div id="downloadNome" class="download-nome" style="display:none;"></div>
-    <button id="btnFecharConsole" class="btn-fechar">FECHAR</button>
-   </div>
-  </div>
-  <div id="assetModal" class="modal">
-   <div class="asset-modal-content">
-    <div class="modal-header">📦 ASSETS</div>
-    <div class="asset-modal-list">
-     <div class="asset-item">
-      <div class="asset-item-title">🛡️ PAINEL SKINS</div>
-      <img src="https://i.ibb.co/zh9bMdGn/Screenshot-20260805-173026-Cap-Cut.jpg">
-      <div class="asset-code" id="assetCode2">#ASSET35E4A302A2FF4074B235AF807348A73D6673</div>
-      <button class="btn-copiar" data-target="assetCode2">📋 COPIAR</button>
-     </div>
-     <div class="asset-item">
-      <div class="asset-item-title">🔥 PAINEL SKINS V2</div>
-      <img src="https://i.ibb.co/9HvcCRkT/Free-Fire-2026-08-07-14-36-09.jpg">
-      <div class="asset-code" id="assetCode3">#ASSETEECFC747BB21404D8756BF1F87E6319F6673</div>
-      <button class="btn-copiar" data-target="assetCode3">📋 COPIAR</button>
-     </div>
+</head>
+<body>
+
+    <!-- 1. PANTALLA DE CARGA INICIAL -->
+    <div id="screen-loading">
+        <h1 class="game-title">FFATTCUENTA</h1>
+        <div class="progress-bar-bg">
+            <div id="loading-bar" class="progress-bar-fill"></div>
+        </div>
+        <p style="margin-top: 10px; color: #64748b; font-size: 12px;">Cargando recursos del juego...</p>
     </div>
-    <button id="btnFecharAsset" class="btn-fechar" style="margin-top: 12px;">FECHAR</button>
-   </div>
-  </div>
-  <div id="avisoModal" class="modal">
-   <div class="modal-content aviso-content">
-    <div class="aviso-icon">⚠️</div>
-    <div class="modal-header">ATENÇÃO!</div>
-    <div class="aviso-text">Mapa baixado com sucesso!</div>
-    <div class="aviso-text" style="color:#ff8c00; font-weight:700;">Blocos duplicados encontrados:</div>
-    <div id="avisoLista" class="aviso-lista"></div>
-    <button id="btnFecharAviso" class="btn-fechar">ENTENDI</button>
-   </div>
-  </div>
-  <div id="erroModal" class="modal">
-   <div class="modal-content erro-content">
-    <div class="erro-icon">❌</div>
-    <div class="modal-header">ARQUIVO INVÁLIDO!</div>
-    <div id="erroLista" class="erro-lista"></div>
-    <button id="btnFecharErro" class="btn-fechar btn-erro">OK</button>
-   </div>
-  </div>
-  <div id="nadaModal" class="modal">
-   <div class="modal-content nada-content">
-    <div class="nada-icon">🚫</div>
-    <div class="modal-header">NADA FOI ATIVADO!</div>
-    <div class="erro-text">Nenhuma skin encontrada no mapa.</div>
-    <button id="btnFecharNada" class="btn-fechar btn-erro">ENTENDI</button>
-   </div>
-  </div>
-  <div id="manutencaoModal" class="modal">
-   <div class="modal-content manutencao-content">
-    <div class="manutencao-icon">🔧</div>
-    <div class="modal-header">@THEUSSYT</div>
-    <div class="erro-text" id="manutencaoTexto">SITE EM MANUTENÇÃO</div>
-    <button id="btnFecharManutencao" class="btn-fechar">OK</button>
-   </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script>
-        const API_URL = "https://summer-lab-4ad4.theussytt-7d3.workers.dev/patch";
 
-        let logsEmAndamento = false;
-        let intervalDots = null;
+    <!-- 2. JUEGO PRINCIPAL -->
+    <div id="screen-game" class="hidden">
+        
+        <div class="card">
+            <h1 class="game-title" style="font-size: 22px; margin-bottom: 10px;">FFATTCUENTA</h1>
+            
+            <!-- MARCADOR DE MONEDAS -->
+            <div class="stat-box">
+                <div>
+                    <div class="stat-title">AttCoins</div>
+                    <div id="val-attcoins" class="stat-val">0 🪙</div>
+                </div>
+                <div>
+                    <div class="stat-title">Diamantes</div>
+                    <div id="val-diamantes" class="stat-val" style="color:#22c55e;">0 💎</div>
+                </div>
+            </div>
 
-        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-        function consoleLog(mensagem, corHex = "#ffd700") {
-            const consoleLogDiv = document.getElementById('consoleLog');
-            const p = document.createElement('p');
-            p.innerHTML = `<span class="arrow">→</span><span style="color:${corHex}">${mensagem}</span>`;
-            consoleLogDiv.appendChild(p);
-            consoleLogDiv.scrollTop = consoleLogDiv.scrollHeight;
+            <!-- NAVEGACIÓN -->
+            <button class="btn-blue" onclick="mostrarSeccion('juego')">🎮 Minijuego</button>
+            <button class="btn-blue" onclick="mostrarSeccion('amigos')">👥 Jugar con Amigo</button>
+            <button class="btn-blue" onclick="mostrarSeccion('tienda')">🛒 Tienda de Diamantes</button>
+            <button class="btn-blue" onclick="mostrarSeccion('canje')">🎁 Canjear Código</button>
+        </div>
+
+        <!-- SECCIÓN: MINIJUEGO -->
+        <div id="sec-juego" class="card">
+            <h3>🎯 Minijuego de Entrenamiento</h3>
+            <p style="font-size: 13px; color: #94a3b8; margin: 10px 0;">Toca el botón rápido para acumular AttCoins.</p>
+            <button onclick="sumarAttCoins()" class="btn-green" style="font-size: 18px; padding: 18px;">¡TAP PARA GANAR 🪙!</button>
+        </div>
+
+        <!-- SECCIÓN: JUGAR CON AMIGO -->
+        <div id="sec-amigos" class="card hidden">
+            <h3>👥 Modo Sala Multijugador</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Juega en privado creando o uniéndote a una sala.</p>
+
+            <button onclick="crearSala()" class="btn-green">Crear Nueva Sala</button>
+            <div id="box-sala-creada" class="hidden" style="margin: 10px 0; background: #0f172a; padding: 10px; border-radius: 8px;">
+                <p style="font-size: 12px; color: #94a3b8;">Código de Sala:</p>
+                <h2 id="sala-codigo" style="color: #ff4655; font-family: 'Orbitron';">---</h2>
+                <p style="font-size: 11px; color: #22c55e; margin-top: 5px;">Esperando a tu amigo...</p>
+            </div>
+
+            <hr style="border-color: #334155; margin: 15px 0;">
+
+            <input type="text" id="input-sala-unirse" placeholder="Ingresa Código de Sala">
+            <button onclick="unirseASala()">Unirse a Sala</button>
+        </div>
+
+        <!-- SECCIÓN: TIENDA -->
+        <div id="sec-tienda" class="card hidden">
+            <h3>🛒 Tienda de Canje Interno</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Cambia tus AttCoins ganadas por Diamantes.</p>
+
+            <button onclick="canjear(20, 10)">20 AttCoins 🪙 ➔ 10 Diamantes 💎</button>
+            <button onclick="canjear(100, 60)">100 AttCoins 🪙 ➔ 60 Diamantes 💎</button>
+        </div>
+
+        <!-- SECCIÓN: CANJEAR CÓDIGOS -->
+        <div id="sec-canje" class="card hidden">
+            <h3>🎁 Apartado de Canje</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Ingresa tus códigos de regalo promocionales.</p>
+            
+            <input type="text" id="input-codigo" placeholder="Escribe el código (Ej: TUNKYFREE)">
+            <button onclick="reclamarCodigo()" class="btn-green">RECLAMAR RECOMPENSA</button>
+        </div>
+
+    </div>
+
+<script>
+    // SIMULACIÓN DE PANTALLA DE CARGA (LOADING)
+    let progress = 0;
+    const loadingInterval = setInterval(() => {
+        progress += 10;
+        document.getElementById('loading-bar').style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(loadingInterval);
+            document.getElementById('screen-loading').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
         }
-        async function log(mensagem, corHex = "#ffd700", delay = 500) { await sleep(delay); consoleLog(mensagem, corHex); }
+    }, 150);
 
-        function iniciarAnimacaoDots() {
-            const consoleLogDiv = document.getElementById('consoleLog');
-            let dots = 0;
-            intervalDots = setInterval(() => {
-                const lastP = consoleLogDiv.querySelector('p:last-child span:last-child');
-                if(lastP && lastP.textContent.includes("ENVIANDO ARQUIVOS AGUARDE")) {
-                    dots = (dots + 1) % 4;
-                    lastP.textContent = "ENVIANDO ARQUIVOS AGUARDE" + ".".repeat(dots);
-                }
-            }, 400);
-        }
-        function pararAnimacaoDots() {
-            if(intervalDots) clearInterval(intervalDots);
-            intervalDots = null;
-        }
+    // DATOS Y VARIABLES
+    let attCoins = parseInt(localStorage.getItem('ff_attcoins')) || 0;
+    let diamantes = parseInt(localStorage.getItem('ff_diamantes')) || 0;
+    let codigosUsados = JSON.parse(localStorage.getItem('ff_codigos')) || [];
 
-        function abrirConsole(slot, id){
-            document.getElementById('consoleModal').style.display = 'flex';
-            document.getElementById('consoleSlotId').textContent = `SLOT: ${slot} | ID: ${id || "-"}`;
-            document.getElementById('consoleLog').innerHTML = "";
-            document.getElementById('downloadNome').style.display = 'none';
-            document.getElementById('btnFecharConsole').disabled = true;
-            logsEmAndamento = true;
-        }
-        function fecharConsole(){
-            if(logsEmAndamento) return;
-            document.getElementById('consoleModal').style.display = 'none';
-        }
-        document.getElementById('btnFecharConsole').onclick = fecharConsole;
-        function abrirAssetModal(){ document.getElementById('assetModal').style.display = 'flex'; }
-        function fecharAssetModal(){ document.getElementById('assetModal').style.display = 'none'; }
-        document.getElementById('btnFecharAsset').onclick = fecharAssetModal;
-        function abrirAvisoModal(duplicados){ const listaDiv = document.getElementById('avisoLista'); listaDiv.innerHTML = ""; for(const [nome, qtd] of Object.entries(duplicados)){ listaDiv.innerHTML += `<div class="aviso-item"><span>→ ${nome}</span><span>${qtd}x</span></div>`; } document.getElementById('avisoModal').style.display = 'flex'; }
-        function fecharAvisoModal(){ document.getElementById('avisoModal').style.display = 'none'; }
-        document.getElementById('btnFecharAviso').onclick = fecharAvisoModal;
-        function abrirErroModal(checks, extras = []){ const listaDiv = document.getElementById('erroLista'); listaDiv.innerHTML = ""; for(const [nome, status] of Object.entries(checks)){ listaDiv.innerHTML += `<div class="erro-item"><span>${nome}</span><span class="${status? 'erro-ok' : 'erro-x'}">${status? '✓ OK' : '✗ FALTANDO'}</span></div>`; } if(extras.length > 0){ listaDiv.innerHTML += `<div style="border-top:1px solid #2a2f55; margin:8px 0;"></div>`; extras.forEach(arq => { listaDiv.innerHTML += `<div class="erro-item"><span>${arq}</span><span class="erro-x">REMOVER</span></div>`; }) } document.getElementById('erroModal').style.display = 'flex'; }
-        function fecharErroModal(){ document.getElementById('erroModal').style.display = 'none'; }
-        document.getElementById('btnFecharErro').onclick = fecharErroModal;
-        function abrirNadaModal(){ document.getElementById('nadaModal').style.display = 'flex'; }
-        function fecharNadaModal(){ document.getElementById('nadaModal').style.display = 'none'; }
-        document.getElementById('btnFecharNada').onclick = fecharNadaModal;
-        function abrirManutencaoModal(texto){ document.getElementById('manutencaoTexto').innerText = texto; document.getElementById('manutencaoModal').style.display = 'flex'; }
-        function fecharManutencaoModal(){ document.getElementById('manutencaoModal').style.display = 'none'; }
-        document.getElementById('btnFecharManutencao').onclick = fecharManutencaoModal;
+    actualizarMarcador();
 
-        document.querySelectorAll('.btn-copiar').forEach(btn => { btn.addEventListener('click', () => { const target = btn.getAttribute('data-target'); copiarCodigo(target, btn); }); });
-        function copiarCodigo(idCodigo, botao){ const code = document.getElementById(idCodigo).textContent; navigator.clipboard.writeText(code).then(() => { botao.textContent = "✅ COPIADO!"; botao.classList.add('copiado'); setTimeout(() => { botao.textContent = "📋 COPIAR"; botao.classList.remove('copiado'); }, 2000); }); }
+    function actualizarMarcador() {
+        document.getElementById('val-attcoins').innerText = attCoins + ' 🪙';
+        document.getElementById('val-diamantes').innerText = diamantes + ' 💎';
+        localStorage.setItem('ff_attcoins', attCoins);
+        localStorage.setItem('ff_diamantes', diamantes);
+    }
 
-        async function validarZip(file) {
-            try {
-                const zip = await JSZip.loadAsync(file);
-                const arquivos = Object.keys(zip.files).filter(n =>!zip.files[n].dir);
-                const regexProjectBytes = /^ProjectData_slot_(\d+)\.bytes$/;
-                const regexProjectMeta = /^ProjectData_slot_(\d+)\.meta$/;
-                const regexUserLevel = /^UserLevelData_(\d+)\.bytes$/;
-                const checks = { "ProjectData_slot_X.bytes": false, "ProjectData_slot_X.meta": false, "UserLevelData_X.bytes": false };
-                let extras = []; let slots = [];
-                if(arquivos.length!== 3){ arquivos.forEach(arq => { if(!regexProjectBytes.test(arq) &&!regexProjectMeta.test(arq) &&!regexUserLevel.test(arq)){ extras.push(arq); } }) }
-                arquivos.forEach(arq => {
-                    if(regexProjectBytes.test(arq)) { checks["ProjectData_slot_X.bytes"] = true; slots.push(arq.match(regexProjectBytes)[1]); }
-                    else if(regexProjectMeta.test(arq)) { checks["ProjectData_slot_X.meta"] = true; slots.push(arq.match(regexProjectMeta)[1]); }
-                    else if(regexUserLevel.test(arq)) { checks["UserLevelData_X.bytes"] = true; slots.push(arq.match(regexUserLevel)[1]); }
-                    else { if(!extras.includes(arq)) extras.push(arq); }
-                });
-                const uniqueSlots = [...new Set(slots)]; let slotDiferente = false;
-                if(uniqueSlots.length > 1){ slotDiferente = true; checks["ProjectData_slot_X.bytes"] = false; checks["ProjectData_slot_X.meta"] = false; checks["UserLevelData_X.bytes"] = false; }
-                const tudoCerto = Object.values(checks).every(v => v === true) && extras.length === 0 &&!slotDiferente;
-                return { tudoCerto, checks, extras, slotDiferente, slot: uniqueSlots[0] };
-            } catch(e) { return { tudoCerto: false, checks: {}, extras: [], erro: "ZIP corrompido" }; }
+    function sumarAttCoins() {
+        attCoins += 1;
+        actualizarMarcador();
+    }
+
+    function mostrarSeccion(sec) {
+        document.getElementById('sec-juego').classList.add('hidden');
+        document.getElementById('sec-amigos').classList.add('hidden');
+        document.getElementById('sec-tienda').classList.add('hidden');
+        document.getElementById('sec-canje').classList.add('hidden');
+
+        document.getElementById('sec-' + sec).classList.remove('hidden');
+    }
+
+    // MULTIJUGADOR (SISTEMA DE SALAS)
+    function crearSala() {
+        const codigoRandom = 'SALA-' + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('sala-codigo').innerText = codigoRandom;
+        document.getElementById('box-sala-creada').classList.remove('hidden');
+    }
+
+    function unirseASala() {
+        const cod = document.getElementById('input-sala-unirse').value.trim();
+        if (!cod) return alert("Escribe un código de sala válido.");
+        alert("¡Te has unido con éxito a la sala " + cod.toUpperCase() + "!");
+        document.getElementById('input-sala-unirse').value = '';
+    }
+
+    // CANJEAR ATTCOINS POR DIAMANTES
+    function canjear(costoCoins, diamantesGanados) {
+        if (attCoins >= costoCoins) {
+            attCoins -= costoCoins;
+            diamantes += diamantesGanados;
+            actualizarMarcador();
+            alert(`¡Canje exitoso! Obtuviste ${diamantesGanados} Diamantes 💎`);
+        } else {
+            alert("No tienes suficientes AttCoins. ¡Juega más en el minijuego!");
+        }
+    }
+
+    // CÓDIGOS DE RECOMPENSA
+    function reclamarCodigo() {
+        const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
+        if (!cod) return alert("Ingresa un código.");
+
+        if (codigosUsados.includes(cod)) {
+            return alert("Ya usaste este código previamente.");
         }
 
-        document.getElementById('btnProcessar').addEventListener('click', async () => {
-            const fileInput = document.getElementById('fileInput');
-            if (!fileInput.files[0]) return alert("Selecione um arquivo ZIP!");
-            const btn = document.getElementById('btnProcessar');
-            btn.disabled = true; btn.textContent = "⚡ VALIDANDO...";
-            let duplicados = {}; let totalAtivados = 0; let totalNaoEncontrado = 0;
+        if (cod === "TUNKYFREE") {
+            diamantes += 100;
+            codigosUsados.push(cod);
+            localStorage.setItem('ff_codigos', JSON.stringify(codigosUsados));
+            actualizarMarcador();
+            alert("🎉 ¡Recompensa reclamada! +100 Diamantes 💎");
+        } else {
+            alert("Código inválido.");
+        }
+        document.getElementById('input-codigo').value = '';
+    }
+</script>
 
-            try {
-                const { tudoCerto, checks, extras, slotDiferente, slot } = await validarZip(fileInput.files[0]);
-                if(!tudoCerto){
-                    fecharConsole(); abrirErroModal(checks, extras);
-                    if(slotDiferente) await log(`[ERRO] Arquivos de slots diferentes`, "#ff4d4d", 300);
-                    btn.disabled = false; btn.textContent = "⚡ ATIVAR SKINS & BAIXAR"; return;
-                }
-
-                abrirConsole(slot, "-");
-                await log("ARQUIVOS VALIDADO!", "#00ff88", 400);
-                await log("ENVIANDO ARQUIVOS AGUARDE...", "#4da3ff", 600);
-                iniciarAnimacaoDots();
-
-                const formData = new FormData();
-                formData.append('file', fileInput.files[0]);
-                const res = await fetch(API_URL, { method: 'POST', body: formData });
-                const data = await res.json();
-
-                if(data.success === false){
-                    pararAnimacaoDots();
-                    await log(`[ERRO] ${data.erro}`, "#ff4d4d", 300);
-                    logsEmAndamento = false;
-                    document.getElementById('btnFecharConsole').disabled = false;
-                    fecharConsole();
-                    abrirManutencaoModal(data.erro);
-                    btn.disabled = false; btn.textContent = "⚡ ATIVAR SKINS & BAIXAR";
-                    return;
-                }
-                if (!res.ok) throw new Error(data.error || "Erro no servidor");
-
-                document.getElementById('consoleSlotId').textContent = `SLOT: ${data.slot} | ID: ${data.playerID}`;
-                pararAnimacaoDots();
-                await log("PROCESSANDO...", "#4da3ff", 400);
-
-                const COR_MAPA = { "green": "#00ff88", "orange": "#ff8c00", "red": "#ff4d4d", "blue": "#4da3ff", "yellow": "#ffd700", "white": "#ffffff" }
-
-                for(const l of data.logs){
-                    let texto = ""; let corHex = "#ffd700";
-                    if(typeof l === 'object' && l!== null && l.text){
-                        texto = l.text; corHex = COR_MAPA[l.color] || "#ffd700";
-                        if(texto.includes("ATIVADO")) totalAtivados++;
-                        if(texto.includes("NÃO ENCONTRADO")) totalNaoEnc
+</body>
+</html>
