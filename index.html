@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FFATTCUENTA - Battle Royale Edition</title>
+    <title>FFATTCUENTA - Ultimate Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
@@ -11,7 +11,8 @@
 
         .game-title { font-family: 'Orbitron', sans-serif; font-size: 24px; color: #ff4655; text-shadow: 0 0 15px rgba(255, 70, 85, 0.6); margin-bottom: 15px; }
         .card { background: rgba(15, 23, 42, 0.95); border-radius: 12px; padding: 20px; max-width: 480px; margin: 15px auto; border: 1px solid rgba(255, 70, 85, 0.3); }
-        
+        .card-inner { background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155; margin-bottom: 12px; text-align: left; }
+
         .stat-box { display: flex; justify-content: space-around; background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #334155; }
         .stat-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
         .stat-val { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: bold; color: #38bdf8; }
@@ -20,33 +21,34 @@
             width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4655 0%, #b91c1c 100%);
             border: none; border-radius: 8px; color: white; font-family: 'Orbitron', sans-serif;
             font-size: 13px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin: 5px 0;
-            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3); transition: 0.2s;
         }
         button:active { transform: scale(0.98); }
         button.btn-blue { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); }
         button.btn-green { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); }
         button.btn-purple { background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%); }
+        button.btn-gold { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: #000; }
         button.btn-yt { background: linear-gradient(135deg, #ff0000 0%, #990000 100%); }
-        button:disabled { background: #475569 !important; opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+        button.btn-gray { background: #334155; box-shadow: none; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; font-size: 14px; text-align: center; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; font-size: 14px; text-align: center; }
         .hidden { display: none !important; }
 
-        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-left: 5px; }
+        .profile-header { display: flex; align-items: center; gap: 12px; }
+        .avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #38bdf8; object-fit: cover; background: #334155; }
+        
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-top: 3px; }
         .badge-endry { background: linear-gradient(90deg, #f59e0b, #ef4444); color: white; border: 1px solid #fef08a; }
-        .badge-yt { background: #ff0000; color: white; }
+        .badge-admin { background: #9333ea; color: white; }
+        .badge-mod { background: #0284c7; color: white; }
 
-        /* Área de Battle Royale */
-        #br-arena {
-            width: 100%; height: 180px; background: #0f172a; border: 2px solid #ff4655;
-            border-radius: 8px; position: relative; overflow: hidden; margin: 10px 0;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
+        .skin-item { display: flex; justify-content: space-between; align-items: center; background: #0f172a; border: 1px solid #334155; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOGIN Y RECUPERACIÓN -->
+    <!-- 1. LOGIN -->
     <div id="sec-login" class="card">
         <h1 class="game-title">FFATTCUENTA</h1>
         <h3>Iniciar Sesión</h3>
@@ -62,31 +64,34 @@
         <button onclick="mostrarSeccionLogin('recuperar')" class="btn-blue" style="font-size:11px; padding:8px;">🔑 RECUPERAR CUENTA</button>
     </div>
 
-    <!-- FORMULARIO DE RECUPERACIÓN -->
+    <!-- RECUPERACIÓN -->
     <div id="sec-recuperar" class="card hidden">
         <h3>Recuperación de Cuenta</h3>
-        <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">Ingresa tu correo de recuperación registrado en ajustes.</p>
-
         <input type="email" id="input-email-recuperar" placeholder="correo.recuperacion@ejemplo.com">
-        <button onclick="validarRecuperacion()" class="btn-green">CONFIRMAR Y RECUPERAR</button>
-        <button onclick="mostrarSeccionLogin('login')" style="background:#334155; margin-top:5px;">Volver al Login</button>
+        <button onclick="validarRecuperacion()" class="btn-green">BUSCAR CUENTA</button>
+        <button onclick="mostrarSeccionLogin('login')" class="btn-gray" style="margin-top:5px;">Volver al Login</button>
 
-        <div id="box-resultado-recuperacion" class="hidden" style="margin-top:15px; background:#0f172a; padding:10px; border-radius:8px; border:1px solid #22c55e;">
-            <p style="font-size:12px; color:#94a3b8;">Cuenta Confirmada:</p>
-            <h3 id="txt-nombre-recuperado" style="color:#22c55e; font-family:'Orbitron';">---</h3>
-            <button onclick="autoIngresarRecuperado()" class="btn-purple" style="font-size:11px; margin-top:8px;">Entrar Ahora</button>
+        <div id="box-resultado-recuperacion" class="hidden" style="margin-top:15px; background:#0f172a; padding:15px; border-radius:8px; border:1px solid #22c55e;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                <img id="img-avatar-recuperado" src="" alt="Avatar" class="avatar" style="width:60px; height:60px;">
+                <h3 id="txt-nombre-recuperado" style="color:#22c55e; font-family:'Orbitron';">---</h3>
+            </div>
+            <button onclick="autoIngresarRecuperado()" class="btn-purple" style="font-size:12px; margin-top:15px;">ENTRAR CON ESTA CUENTA</button>
         </div>
     </div>
 
     <!-- 2. PANEL PRINCIPAL -->
     <div id="sec-main" class="hidden">
         <div class="card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <div style="text-align:left;">
-                    <span id="user-display" style="font-size:13px; color:#94a3b8;">Jugador: ---</span>
-                    <span id="badge-container"></span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <div class="profile-header">
+                    <img id="user-avatar" src="" alt="Avatar" class="avatar">
+                    <div style="text-align:left;">
+                        <span id="user-display" style="font-size:15px; font-weight:bold; color:white;">Jugador: ---</span><br>
+                        <span id="badge-container"></span>
+                    </div>
                 </div>
-                <button onclick="cerrarSesion()" style="width:auto; padding:5px 10px; font-size:10px; background:#334155;">Salir</button>
+                <button onclick="cerrarSesion()" class="btn-gray" style="width:auto; padding:6px 12px; font-size:10px;">Salir</button>
             </div>
 
             <!-- MARCADOR DE RECURSOS -->
@@ -101,74 +106,126 @@
                 </div>
             </div>
 
-            <!-- NAVEGACIÓN PRINCIPAL -->
-            <button class="btn-green" onclick="mostrarSeccion('br')">🔥 Modo Battle Royale</button>
-            <button class="btn-blue" onclick="mostrarSeccion('pase')">🏆 Pase de Batalla</button>
-            <button class="btn-purple" onclick="mostrarSeccion('canje')">🎁 Canjear Código</button>
-            <button class="btn-yt" onclick="mostrarSeccion('youtube')">▶️ Zona Youtubers</button>
-            <button onclick="mostrarSeccion('ajustes')" style="background:#334155;">⚙️ Ajustes de Cuenta</button>
+            <!-- MENU DE NAVEGACIÓN -->
+            <button class="btn-gold" onclick="mostrarSeccion('luck')">🌸 Luck Royale & Ruleta</button>
+            <button class="btn-purple" onclick="mostrarSeccion('duo')">💞 Dúo Dinámico</button>
+            <button class="btn-blue" onclick="mostrarSeccion('skins')">👕 Tienda de Paquetes / Skins</button>
+            <button class="btn-green" onclick="mostrarSeccion('social')">👥 Social / Amigos</button>
+            <button class="btn-yt" id="btn-admin-panel" onclick="mostrarSeccion('admin')" class="hidden" style="background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);">👑 Panel Creador (Endry)</button>
+            <button class="btn-gray" onclick="mostrarSeccion('ajustes')">⚙️ Ajustes</button>
         </div>
 
-        <!-- SECCIÓN: BATTLE ROYALE -->
-        <div id="sec-br" class="card hidden">
-            <h3>🔥 Battle Royale de Plantas</h3>
-            <p style="font-size:12px; color:#94a3b8; margin-bottom:10px;">Enfréntate a 10 jugadores bot para ser el último en pie.</p>
+        <!-- SECCIÓN: LUCK ROYALE SAKURA & DIAMANTES ALEATORIOS -->
+        <div id="sec-luck" class="card hidden">
+            <h3 style="color:#f472b6;">🌸 Luck Royale & Ruleta</h3>
+            <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">¡Gira para ganar diamantes aleatorios o paquetes legendarios!</p>
 
-            <div id="br-arena">
-                <p id="br-status" style="font-size:14px; font-family:'Orbitron'; color:#38bdf8;">¿Listo para la batalla?</p>
-                <p id="br-killa-txt" style="font-size:12px; color:#22c55e; margin-top:5px;"></p>
+            <div style="background:#0f172a; padding:20px; border-radius:8px; border:2px dashed #f472b6; margin-bottom:12px;">
+                <h2 id="luck-result" style="font-family:'Orbitron'; color:#38bdf8;">🎁 ¿?</h2>
             </div>
 
-            <button onclick="iniciarBattleRoyale()" class="btn-green">ENTRAR A LA PARTIDA (Cuesta 10 🪙)</button>
+            <button onclick="girarLuckRoyale(1)" class="btn-purple">GIRO SIMPLE (20 💎)</button>
+            <button onclick="girarLuckRoyale(5)" class="btn-gold">5 GIROS ESPECIALES (90 💎)</button>
         </div>
 
-        <!-- SECCIÓN: PASE DE BATALLA -->
-        <div id="sec-pase" class="card hidden">
-            <h3>🏆 Pase de Batalla VIP</h3>
-            <p style="font-size:12px; color:#94a3b8; margin-bottom:10px;">Gana partidas en Battle Royale para desbloquear niveles.</p>
+        <!-- SECCIÓN: DÚO DINÁMICO -->
+        <div id="sec-duo" class="card hidden">
+            <h3>💞 Dúo Dinámico</h3>
+            <div id="box-no-duo">
+                <p style="font-size:12px; color:#94a3b8; margin-bottom:10px;">Ingresa el nombre de tu amigo para formar un Dúo Dinámico.</p>
+                <input type="text" id="input-duo-nombre" placeholder="Nombre de tu Dúo">
+                <button onclick="vincularDuo()" class="btn-purple">VINCULAR DÚO</button>
+            </div>
 
-            <div style="background:#0f172a; padding:12px; border-radius:8px; margin-bottom:10px;">
-                <div style="display:flex; justify-content:space-between; font-size:13px;">
-                    <span>XP Actual: <b id="val-xp" style="color:#38bdf8;">0 / 100</b></span>
-                    <span>Nivel Pase: <b id="val-nivel" style="color:#22c55e;">1</b></span>
+            <div id="box-si-duo" class="hidden">
+                <div class="card-inner">
+                    <p style="font-size:12px; color:#94a3b8;">Dúo Actual:</p>
+                    <h3 id="txt-duo-nombre" style="color:#f472b6; font-family:'Orbitron';">---</h3>
+                    <p style="font-size:12px; margin-top:5px;">Puntos de Afinidad: <b id="txt-duo-puntos" style="color:#38bdf8;">0 PTS</b></p>
+                </div>
+                <button onclick="reclamarCajaDuo()" class="btn-green">RECLAMAR CAJA DE DÚO (Recompensa)</button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: TIENDA DE PAQUETES DE SKINS -->
+        <div id="sec-skins" class="card hidden">
+            <h3>👕 Tienda de Paquetes / Skins</h3>
+            <p style="font-size:12px; color:#94a3b8; margin-bottom:10px;">Colección de paquetes exclusivos:</p>
+
+            <div id="list-skins">
+                <div class="skin-item">
+                    <span>🌸 Paquete Sakura Legendario</span>
+                    <button id="btn-skin-Sakura" onclick="equiparOComprar('Sakura', 500)" class="btn-gray" style="width:auto; padding:5px 10px; font-size:10px;">500 💎</button>
+                </div>
+                <div class="skin-item">
+                    <span>👑 Paquete Sombra Escarlata</span>
+                    <button id="btn-skin-Escarlata" onclick="equiparOComprar('Escarlata', 350)" class="btn-gray" style="width:auto; padding:5px 10px; font-size:10px;">350 💎</button>
+                </div>
+                <div class="skin-item">
+                    <span>🧭 Paquete Explorador</span>
+                    <button id="btn-skin-Explorador" onclick="equiparOComprar('Explorador', 250)" class="btn-gray" style="width:auto; padding:5px 10px; font-size:10px;">250 💎</button>
+                </div>
+                <div class="skin-item">
+                    <span>🎓 Paquete Maestro</span>
+                    <button id="btn-skin-Maestro" onclick="equiparOComprar('Maestro', 300)" class="btn-gray" style="width:auto; padding:5px 10px; font-size:10px;">300 💎</button>
+                </div>
+                <div class="skin-item">
+                    <span>☣️ Paquete Exterminador</span>
+                    <button id="btn-skin-Exterminador" onclick="equiparOComprar('Exterminador', 400)" class="btn-gray" style="width:auto; padding:5px 10px; font-size:10px;">400 💎</button>
                 </div>
             </div>
-
-            <button onclick="reclamarRecompensaPase()" class="btn-green">Reclamar Premio de Nivel</button>
         </div>
 
-        <!-- SECCIÓN: CANJE DE CÓDIGOS -->
-        <div id="sec-canje" class="card hidden">
-            <h3>🎁 Apartado de Canje</h3>
-            <p style="font-size:12px; color:#94a3b8; margin-bottom:10px;">Ingresa tus códigos de tarjetas o el código especial.</p>
-
-            <input type="text" id="input-codigo" placeholder="Ejemplo: SECRETLUCKIN">
-            <button onclick="ejecutarCanjeCodigo()" class="btn-purple">RECLAMAR CÓDIGO</button>
-        </div>
-
-        <!-- SECCIÓN: YOUTUBERS Y BENEFICIOS -->
-        <div id="sec-youtube" class="card hidden">
-            <h3>▶️ Zona de Creadores / Youtubers</h3>
-            <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">Vincula tu canal para obtener tu insignia y beneficios diarios.</p>
-
-            <input type="text" id="input-yt-url" placeholder="https://www.youtube.com/@tu_canal">
-            <button onclick="vincularYouTube()" class="btn-yt">VERIFICAR CANAL</button>
-
-            <div id="box-beneficio-yt" class="hidden" style="margin-top:15px; background:#0f172a; padding:10px; border-radius:8px;">
-                <p style="font-size:12px; color:#22c55e;">✅ Beneficio Youtuber Activo</p>
-                <button onclick="reclamarBonoYoutuber()" class="btn-green" style="font-size:11px; margin-top:5px;">Reclamar Bono Creador (500 🪙 + 200 💎)</button>
+        <!-- SECCIÓN: SOCIAL (REGALOS Y SALAS) -->
+        <div id="sec-social" class="card hidden">
+            <h3>👥 Zona Social</h3>
+            <div class="card-inner">
+                <h4 style="margin-bottom:8px; color:#eab308;">🎁 Enviar Regalo</h4>
+                <input type="text" id="input-regalo-nombre" placeholder="Nombre del jugador">
+                <select id="select-regalo-tipo">
+                    <option value="diamantes">Regalar Diamantes 💎</option>
+                    <option value="coins">Regalar AttCoins 🪙</option>
+                </select>
+                <input type="number" id="input-regalo-cantidad" placeholder="Cantidad" min="1">
+                <button onclick="enviarRegalo()" class="btn-purple" style="font-size:11px;">ENVIAR REGALO</button>
             </div>
         </div>
 
-        <!-- SECCIÓN: AJUSTES (CORREO RECUPERACIÓN) -->
+        <!-- SECCIÓN: PANEL CREADOR / ADMIN (Solo Endry) -->
+        <div id="sec-admin" class="card hidden" style="border-color:#f59e0b;">
+            <h3 style="color:#f59e0b;">👑 Panel de Control Creador (Admin)</h3>
+            <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">Gestión avanzada de cuentas e inventario.</p>
+
+            <div class="card-inner">
+                <h4 style="margin-bottom:8px; color:#38bdf8;">⚙️ Modificar Recursos / Rangos</h4>
+                <input type="text" id="admin-target-user" placeholder="Nombre del Usuario">
+                
+                <select id="admin-action-type">
+                    <option value="add_coins">Dar AttCoins 🪙</option>
+                    <option value="add_diamonds">Dar Diamantes 💎</option>
+                    <option value="set_admin">Dar Rango Admin 👑</option>
+                    <option value="set_mod">Dar Rango Moderador 🛡️</option>
+                    <option value="remove_rank">Quitar Rangos ❌</option>
+                </select>
+
+                <input type="number" id="admin-amount" placeholder="Cantidad (Si aplica)" value="1000">
+                <button onclick="ejecutarAccionAdmin()" class="btn-gold">APLICAR CAMBIO</button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: AJUSTES -->
         <div id="sec-ajustes" class="card hidden">
             <h3>⚙️ Ajustes de Cuenta</h3>
-            <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">Registra tu correo de recuperación en caso de perder acceso.</p>
-
-            <input type="email" id="input-correo-recuperacion" placeholder="correo.recuperacion@ejemplo.com">
-            <button onclick="guardarCorreoRecuperacion()" class="btn-green">GUARDAR CORREO DE RECUPERACIÓN</button>
-
-            <p id="status-correo-rec" style="font-size:11px; color:#22c55e; margin-top:8px;"></p>
+            <div class="card-inner">
+                <h4 style="margin-bottom:8px;">🖼️ Foto de Perfil</h4>
+                <input type="text" id="input-avatar-url" placeholder="URL de la imagen">
+                <button onclick="actualizarAvatar()" class="btn-blue" style="font-size:11px;">CAMBIAR FOTO</button>
+            </div>
+            <div class="card-inner">
+                <h4 style="margin-bottom:8px;">🔐 Correo de Recuperación</h4>
+                <input type="email" id="input-correo-recuperacion" placeholder="Tu correo de seguridad">
+                <button onclick="guardarCorreoRecuperacion()" class="btn-green" style="font-size:11px;">GUARDAR CORREO</button>
+            </div>
         </div>
 
     </div>
@@ -176,16 +233,20 @@
 <script>
     // ESTADO GLOBAL
     let usuarioActual = JSON.parse(localStorage.getItem('ff_sesion')) || null;
+    let avatarUrl = localStorage.getItem('ff_avatar') || 'https://i.pravatar.cc/150?img=11';
     let attCoins = parseInt(localStorage.getItem('ff_attcoins')) || 100;
-    let diamantes = parseInt(localStorage.getItem('ff_diamantes')) || 0;
-    let xpPase = parseInt(localStorage.getItem('ff_xp')) || 0;
-    let nivelPase = parseInt(localStorage.getItem('ff_nivel')) || 1;
+    let diamantes = parseInt(localStorage.getItem('ff_diamantes')) || 100;
 
-    let correoRecuperacion = localStorage.getItem('ff_correo_rec') || '';
-    let canalYT = localStorage.getItem('ff_yt_channel') || '';
-    let codigosRedimidos = JSON.parse(localStorage.getItem('ff_codigos_redimidos')) || [];
+    // DÚO & SKINS
+    let duoNombre = localStorage.getItem('ff_duo_name') || '';
+    let duoPuntos = parseInt(localStorage.getItem('ff_duo_pts')) || 0;
+    let misSkins = JSON.parse(localStorage.getItem('ff_mis_skins')) || [];
 
-    // AUTO-INICIO
+    // RANGOS Y RECUPERACIÓN
+    let miRango = localStorage.getItem('ff_user_rank') || 'USER';
+    let datosRecuperacionDB = JSON.parse(localStorage.getItem('ff_recovery_db')) || {};
+    let cuentaTemporalRecuperada = null;
+
     window.addEventListener('DOMContentLoaded', () => {
         if (usuarioActual) cargarPanelJuego();
     });
@@ -195,10 +256,7 @@
         e.preventDefault();
         const nombre = document.getElementById('auth-name').value.trim();
         const email = document.getElementById('auth-email').value.trim().toLowerCase();
-
-        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!regexEmail.test(email)) return alert("Ingresa un correo electrónico válido.");
-
+        
         usuarioActual = { nombre, email };
         localStorage.setItem('ff_sesion', JSON.stringify(usuarioActual));
         cargarPanelJuego();
@@ -209,26 +267,41 @@
         document.getElementById('sec-recuperar').classList.add('hidden');
         document.getElementById('sec-main').classList.remove('hidden');
 
-        document.getElementById('user-display').innerText = `Jugador: ${usuarioActual.nombre}`;
+        document.getElementById('user-display').innerText = `${usuarioActual.nombre}`;
+        document.getElementById('user-avatar').src = avatarUrl;
 
-        // ASIGNAR INSIGNIAS ESPECIALES
         const badgeContainer = document.getElementById('badge-container');
         badgeContainer.innerHTML = '';
 
-        // Insignia especial para 'endry'
-        if (usuarioActual.nombre.toLowerCase() === 'endry') {
-            badgeContainer.innerHTML += `<span class="badge badge-endry">👑 ENDRY VIP</span>`;
+        const esEndry = usuarioActual.nombre.toLowerCase() === 'endry';
+
+        if (esEndry) {
+            badgeContainer.innerHTML += `<span class="badge badge-endry">👑 CREADOR LEYENDA</span>`;
+            document.getElementById('btn-admin-panel').classList.remove('hidden');
+        } else if (miRango === 'ADMIN') {
+            badgeContainer.innerHTML += `<span class="badge badge-admin">👑 ADMIN</span>`;
+        } else if (miRango === 'MOD') {
+            badgeContainer.innerHTML += `<span class="badge badge-mod">🛡️ MODERADOR</span>`;
         }
 
-        // Insignia Youtuber
-        if (canalYT) {
-            badgeContainer.innerHTML += `<span class="badge badge-yt">🎬 YOUTUBER</span>`;
-            document.getElementById('box-beneficio-yt').classList.remove('hidden');
+        // DÚO STATUS
+        if (duoNombre) {
+            document.getElementById('box-no-duo').classList.add('hidden');
+            document.getElementById('box-si-duo').classList.remove('hidden');
+            document.getElementById('txt-duo-nombre').innerText = duoNombre;
+            document.getElementById('txt-duo-puntos').innerText = duoPuntos + ' PTS';
         }
 
-        if (correoRecuperacion) {
-            document.getElementById('status-correo-rec').innerText = `Correo registrado: ${correoRecuperacion}`;
-        }
+        // REVISAR ESTADO DE TIENDA DE SKINS
+        ['Sakura', 'Escarlata', 'Explorador', 'Maestro', 'Exterminador'].forEach(skinKey => {
+            const btn = document.getElementById(`btn-skin-${skinKey}`);
+            if (btn) {
+                if (misSkins.includes(skinKey)) {
+                    btn.className = 'btn-green';
+                    btn.innerText = 'Equipar';
+                }
+            }
+        });
 
         actualizarMarcador();
     }
@@ -238,6 +311,117 @@
         location.reload();
     }
 
+    // LUCK ROYALE CON DIAMANTES ALEATORIOS
+    function girarLuckRoyale(giros) {
+        const costo = giros === 1 ? 20 : 90;
+        if (diamantes < costo) return alert("No tienes suficientes Diamantes.");
+
+        diamantes -= costo;
+        let totalDiamantesGanados = 0;
+        let skinObtenida = null;
+
+        const posiblesSkins = ['Sakura', 'Escarlata', 'Explorador', 'Maestro', 'Exterminador'];
+
+        for (let i = 0; i < giros; i++) {
+            const probabilidad = Math.random();
+            
+            if (probabilidad > 0.85) {
+                // 15% probabilidad de obtener skin no regalada
+                const noObtenidas = posiblesSkins.filter(s => !misSkins.includes(s));
+                if (noObtenidas.length > 0) {
+                    skinObtenida = noObtenidas[Math.floor(Math.random() * noObtenidas.length)];
+                    if (!misSkins.includes(skinObtenida)) {
+                        misSkins.push(skinObtenida);
+                    }
+                } else {
+                    totalDiamantesGanados += Math.floor(Math.random() * 80) + 20;
+                }
+            } else {
+                // Diamantes aleatorios válidos (entre 5 y 50 por giro)
+                const diaRan = Math.floor(Math.random() * 46) + 5;
+                totalDiamantesGanados += diaRan;
+            }
+        }
+
+        diamantes += totalDiamantesGanados;
+        localStorage.setItem('ff_mis_skins', JSON.stringify(misSkins));
+        actualizarMarcador();
+
+        let msj = "";
+        if (skinObtenida) {
+            msj = `🎉 ¡¡GANASTE EL PAQUETE ${skinObtenida.toUpperCase()}!!`;
+            if (totalDiamantesGanados > 0) msj += ` (+${totalDiamantesGanados} 💎)`;
+        } else {
+            msj = `💎 ¡Ganaste +${totalDiamantesGanados} Diamantes!`;
+        }
+
+        document.getElementById('luck-result').innerText = msj;
+        cargarPanelJuego();
+    }
+
+    // DÚO DINÁMICO
+    function vincularDuo() {
+        const nom = document.getElementById('input-duo-nombre').value.trim();
+        if (!nom) return alert("Ingresa el nombre de tu amigo.");
+
+        duoNombre = nom;
+        duoPuntos = 100;
+        localStorage.setItem('ff_duo_name', duoNombre);
+        localStorage.setItem('ff_duo_pts', duoPuntos);
+        alert(`💞 ¡Dúo Dinámico vinculado con éxito con ${duoNombre}!`);
+        cargarPanelJuego();
+    }
+
+    function reclamarCajaDuo() {
+        if (duoPuntos < 50) return alert("Necesitan más puntos de afinidad.");
+        diamantes += 40;
+        attCoins += 100;
+        duoPuntos += 25;
+        localStorage.setItem('ff_duo_pts', duoPuntos);
+        actualizarMarcador();
+        alert("🎁 ¡Recompensas de Dúo Reclamadas! +40 Diamantes 💎 y +100 AttCoins 🪙");
+    }
+
+    // SKINS Y COMPRA EN TIENDA
+    function equiparOComprar(nombreSkin, precio) {
+        if (misSkins.includes(nombreSkin)) {
+            alert(`✨ Has equipado el paquete: ${nombreSkin}`);
+        } else {
+            if (diamantes < precio) return alert(`Necesitas ${precio} Diamantes para comprar este paquete.`);
+            diamantes -= precio;
+            misSkins.push(nombreSkin);
+            localStorage.setItem('ff_mis_skins', JSON.stringify(misSkins));
+            actualizarMarcador();
+            cargarPanelJuego();
+            alert(`🎉 ¡Compraste el Paquete ${nombreSkin} con éxito!`);
+        }
+    }
+
+    // PANEL CREADOR / ADMIN
+    function ejecutarAccionAdmin() {
+        const target = document.getElementById('admin-target-user').value.trim();
+        const accion = document.getElementById('admin-action-type').value;
+        const cantidad = parseInt(document.getElementById('admin-amount').value) || 0;
+
+        if (!target) return alert("Escribe el nombre del usuario.");
+
+        if (target.toLowerCase() === usuarioActual.nombre.toLowerCase()) {
+            if (accion === 'add_coins') attCoins += cantidad;
+            if (accion === 'add_diamonds') diamantes += cantidad;
+            if (accion === 'set_admin') miRango = 'ADMIN';
+            if (accion === 'set_mod') miRango = 'MOD';
+            if (accion === 'remove_rank') miRango = 'USER';
+
+            localStorage.setItem('ff_user_rank', miRango);
+            actualizarMarcador();
+            cargarPanelJuego();
+            alert(`✅ Modificaciones aplicadas a tu cuenta.`);
+        } else {
+            alert(`✅ Comando enviado para el usuario: ${target}`);
+        }
+    }
+
+    // RECUPERACIÓN & AJUSTES
     function mostrarSeccionLogin(vista) {
         if (vista === 'recuperar') {
             document.getElementById('sec-login').classList.add('hidden');
@@ -248,152 +432,79 @@
         }
     }
 
-    // AJUSTES Y RECUPERACIÓN
     function guardarCorreoRecuperacion() {
         const correo = document.getElementById('input-correo-recuperacion').value.trim().toLowerCase();
-        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!correo.includes("@")) return alert("Correo inválido.");
 
-        if (!regexEmail.test(correo)) return alert("Ingresa un correo electrónico válido.");
-
-        correoRecuperacion = correo;
-        localStorage.setItem('ff_correo_rec', correoRecuperacion);
-        document.getElementById('status-correo-rec').innerText = `Correo registrado: ${correoRecuperacion}`;
-        alert("✅ Correo de recuperación guardado con éxito.");
+        datosRecuperacionDB[correo] = { nombre: usuarioActual.nombre, avatar: avatarUrl };
+        localStorage.setItem('ff_recovery_db', JSON.stringify(datosRecuperacionDB));
+        alert("✅ Correo de recuperación guardado.");
     }
 
     function validarRecuperacion() {
         const correoInput = document.getElementById('input-email-recuperar').value.trim().toLowerCase();
-        
-        if (!correoRecuperacion || correoInput !== correoRecuperacion) {
-            return alert("El correo ingresado no coincide con ningún correo de recuperación registrado.");
+        if (datosRecuperacionDB[correoInput]) {
+            cuentaTemporalRecuperada = datosRecuperacionDB[correoInput];
+            cuentaTemporalRecuperada.email = correoInput;
+
+            document.getElementById('txt-nombre-recuperado').innerText = cuentaTemporalRecuperada.nombre;
+            document.getElementById('img-avatar-recuperado').src = cuentaTemporalRecuperada.avatar;
+            document.getElementById('box-resultado-recuperacion').classList.remove('hidden');
+        } else {
+            alert("❌ Correo no registrado.");
         }
-
-        const datosGuardados = JSON.parse(localStorage.getItem('ff_sesion'));
-        const nombreRecuperado = datosGuardados ? datosGuardados.nombre : 'JugadorRecuperado';
-
-        document.getElementById('txt-nombre-recuperado').innerText = nombreRecuperado;
-        document.getElementById('box-resultado-recuperacion').classList.remove('hidden');
     }
 
     function autoIngresarRecuperado() {
-        const nombre = document.getElementById('txt-nombre-recuperado').innerText;
-        usuarioActual = { nombre, email: correoRecuperacion };
+        usuarioActual = { nombre: cuentaTemporalRecuperada.nombre, email: cuentaTemporalRecuperada.email };
+        avatarUrl = cuentaTemporalRecuperada.avatar;
         localStorage.setItem('ff_sesion', JSON.stringify(usuarioActual));
+        localStorage.setItem('ff_avatar', avatarUrl);
         cargarPanelJuego();
     }
 
-    // MARCADOR GENERAL
+    function actualizarAvatar() {
+        const url = document.getElementById('input-avatar-url').value.trim();
+        if (!url) return alert("Pega una URL válida.");
+        avatarUrl = url;
+        localStorage.setItem('ff_avatar', avatarUrl);
+        document.getElementById('user-avatar').src = avatarUrl;
+        alert("🖼️ Avatar actualizado.");
+    }
+
+    function enviarRegalo() {
+        const amigo = document.getElementById('input-regalo-nombre').value.trim();
+        const tipo = document.getElementById('select-regalo-tipo').value;
+        const cantidad = parseInt(document.getElementById('input-regalo-cantidad').value);
+
+        if (!amigo || isNaN(cantidad) || cantidad <= 0) return alert("Completa los campos correctamente.");
+
+        if (tipo === 'diamantes') {
+            if (diamantes < cantidad) return alert("Sin suficientes Diamantes.");
+            diamantes -= cantidad;
+        } else {
+            if (attCoins < cantidad) return alert("Sin suficientes AttCoins.");
+            attCoins -= cantidad;
+        }
+        actualizarMarcador();
+        alert(`🎁 Regalo enviado a ${amigo}.`);
+    }
+
     function actualizarMarcador() {
         document.getElementById('val-attcoins').innerText = attCoins.toLocaleString() + ' 🪙';
         document.getElementById('val-diamantes').innerText = diamantes.toLocaleString() + ' 💎';
-        document.getElementById('val-xp').innerText = `${xpPase} / 100`;
-        document.getElementById('val-nivel').innerText = nivelPase;
-
         localStorage.setItem('ff_attcoins', attCoins);
         localStorage.setItem('ff_diamantes', diamantes);
-        localStorage.setItem('ff_xp', xpPase);
-        localStorage.setItem('ff_nivel', nivelPase);
     }
 
     function mostrarSeccion(sec) {
-        document.getElementById('sec-br').classList.add('hidden');
-        document.getElementById('sec-pase').classList.add('hidden');
-        document.getElementById('sec-canje').classList.add('hidden');
-        document.getElementById('sec-youtube').classList.add('hidden');
-        document.getElementById('sec-ajustes').classList.add('hidden');
-
+        ['luck', 'duo', 'skins', 'social', 'admin', 'ajustes'].forEach(s => {
+            const el = document.getElementById('sec-' + s);
+            if (el) el.classList.add('hidden');
+        });
         document.getElementById('sec-' + sec).classList.remove('hidden');
-    }
-
-    // BATTLE ROYALE
-    function iniciarBattleRoyale() {
-        if (attCoins < 10) return alert("Necesitas al menos 10 AttCoins para jugar el Battle Royale.");
-
-        attCoins -= 10;
-        actualizarMarcador();
-
-        const statusTxt = document.getElementById('br-status');
-        const killaTxt = document.getElementById('br-killa-txt');
-
-        statusTxt.innerText = "⏳ Saltando del autobús de batalla...";
-        killaTxt.innerText = "";
-
-        setTimeout(() => { statusTxt.innerText = "⚔️ Combatiendo contra 10 bots..."; }, 1200);
-
-        setTimeout(() => {
-            const victoria = Math.random() > 0.3; // 70% probabilidad de victoria
-            if (victoria) {
-                statusTxt.innerText = "🏆 ¡VICTORIA ROYALE! #1";
-                killaTxt.innerText = "+50 XP del Pase & +30 Diamantes 💎";
-                xpPase += 50;
-                diamantes += 30;
-
-                if (xpPase >= 100) {
-                    xpPase -= 100;
-                    nivelPase += 1;
-                }
-            } else {
-                statusTxt.innerText = "💀 Eliminado (#5 de 10)";
-                killaTxt.innerText = "+10 XP del Pase por participación.";
-                xpPase += 10;
-            }
-            actualizarMarcador();
-        }, 3000);
-    }
-
-    function reclamarRecompensaPase() {
-        if (nivelPase > 1) {
-            const premio = nivelPase * 40;
-            diamantes += premio;
-            actualizarMarcador();
-            alert(`🎉 Recompensa reclamada: +${premio} Diamantes 💎`);
-        } else {
-            alert("Juega al Battle Royale para subir de nivel en el Pase.");
-        }
-    }
-
-    // VINCULAR YOUTUBE Y BONOS
-    function vincularYouTube() {
-        const url = document.getElementById('input-yt-url').value.trim();
-        const regexYT = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-
-        if (!regexYT.test(url)) return alert("Por favor ingresa una URL de YouTube válida.");
-
-        canalYT = url;
-        localStorage.setItem('ff_yt_channel', canalYT);
-        alert("🎉 ¡Canal verificado! Se ha activado la insignia y los beneficios de Youtuber.");
-        cargarPanelJuego();
-    }
-
-    function reclamarBonoYoutuber() {
-        attCoins += 500;
-        diamantes += 200;
-        actualizarMarcador();
-        alert("🎉 ¡Bono de Creador reclamado! +500 AttCoins 🪙 y +200 Diamantes 💎");
-    }
-
-    // CANJE DE CÓDIGOS
-    function ejecutarCanjeCodigo() {
-        const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
-
-        if (!cod) return alert("Escribe un código.");
-        if (codigosRedimidos.includes(cod)) return alert("Este código ya fue utilizado.");
-
-        if (cod === "SECRETLUCKIN") {
-            attCoins += 1200000;
-            diamantes += 1200000;
-            codigosRedimidos.push(cod);
-            localStorage.setItem('ff_codigos_redimidos', JSON.stringify(codigosRedimidos));
-            actualizarMarcador();
-            alert("🔥 ¡CÓDIGO SECRETO DESBLOQUEADO! +1,200,000 AttCoins 🪙 y +1,200,000 Diamantes 💎");
-        } else {
-            alert("Código incorrecto o no válido.");
-        }
-
-        document.getElementById('input-codigo').value = '';
     }
 </script>
 
 </body>
-            </html>
-    
+</html>
