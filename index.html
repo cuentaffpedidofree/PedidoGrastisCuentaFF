@@ -1,458 +1,302 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuentas Free Fire & Chat Privado</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+<!doctype html>
+<html lang="pt-br">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATIVAR SKINS</title>
+  <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+.container { background: #0f1222; width: 100%; max-width: 450px; padding: 30px 25px; border-radius: 20px; box-shadow: 0 0 25px rgba(0,0,0,0.6); position: relative; }
+        h1 { text-align: center; color: #fca311; font-size: 28px; font-weight: 900; margin-bottom: 5px; letter-spacing: 1px; }
+.sub { text-align: center; color: #fca311; font-size: 12px; letter-spacing: 1px; margin-bottom: 20px; }
+.box { background: #151933; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
+.box-title { color: #fca311; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; font-size: 14px; }
+.box p { font-size: 13px; color: #c0c5d6; line-height: 1.6; }
+.box p code { color: #4da3ff; background: #0a0c1a; padding: 2px 4px; border-radius: 4px; }
+.file-box { text-align: center; }
+        input[type="file"] { width: 100%; padding: 12px; border: 2px dashed #2a2f55; border-radius: 8px; background: #0f1222; color: #aaa; cursor: pointer; font-size: 13px; }
+        input[type="file"]::file-selector-button { background: #2a2f55; border: none; padding: 8px 12px; border-radius: 6px; color: #fff; cursor: pointer; margin-right: 10px; }
+        button { width: 100%; padding: 14px; border: none; border-radius: 10px; background: #fca311; color: #000; font-weight: 900; font-size: 15px; cursor: pointer; margin-top: 15px; transition: 0.2s; }
+        button:hover { filter: brightness(1.1); transform: scale(1.02); }
+        button:disabled { background: #555; cursor: not-allowed; }
+.tiktok { background: #000; color: #fff; border: 1px solid #333; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; }
+.tiktok:hover { background: #111; }
+.discord { background: #5865F2; color: #fff; border: none; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; }
+.discord:hover { background: #4752C4; }
+.asset-code { background: #151933; padding: 10px; border-radius: 6px; font-family: 'Consolas', monospace; font-size: 12px; color: #4da3ff; word-break: break-all; margin-bottom: 10px; text-align: center; }
+.btn-copiar { background: #2a2f55; color: #fff; font-size: 13px; padding: 10px; margin-top: 0; }
+.btn-copiar.copiado { background: #00ff88; color: #000; }
+.modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
+.modal-content { background: #0d1121; border: 2px solid #fca311; border-radius: 12px; width: 90%; max-width: 420px; padding: 20px; color: #fff; box-shadow: 0 0 30px rgba(252,163,17,0.3); }
+.modal-header { text-align: center; font-weight: 900; font-size: 16px; margin-bottom: 12px; color: #fff; }
+.slot-id { background: #151933; border: 1px solid #fca311; border-radius: 8px; padding: 10px; text-align: center; font-weight: 900; color: #fca311; margin-bottom: 8px; }
+.operador { text-align: center; font-size: 12px; color: #fca311; margin-bottom: 15px; }
+.console-log { background: #070a14; border-radius: 8px; padding: 12px; height: 220px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 13px; margin-bottom: 15px; }
+.console-log p { margin: 4px 0; display: flex; gap: 6px; }
+.console-log.arrow { color: #fca311; font-weight: bold; }
+.btn-fechar { width: 100%; padding: 12px; background: #fca311; color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; }
+.btn-fechar:disabled { background: #555; cursor: not-allowed; opacity: 0.6; }
+   /* MODAL ASSETS MENOR */
+.asset-modal-content { background: #0d1121; border: 2px solid #fca311; border-radius: 12px; width: 92%; max-width: 340px; max-height: 80vh; padding: 14px; color: #fff; box-shadow: 0 0 30px rgba(252,163,17,0.3); overflow-y: auto; }
+.asset-modal-list { display: flex; flex-direction: column; gap: 10px; }
+.asset-item { background: #151933; padding: 10px; border-radius: 8px; }
+.asset-item-title { color: #fca311; font-weight: 700; font-size: 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+.asset-item img { width: 100%; border-radius: 6px; margin-bottom: 6px; }
+.aviso-content { text-align: center; }
+.aviso-icon { font-size: 40px; margin-bottom: 10px; }
+.aviso-text { font-size: 13px; color: #c0c5d6; line-height: 1.6; margin-bottom: 15px; }
+.aviso-lista { background: #151933; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: left; }
+.aviso-item { display: flex; justify-content: space-between; margin: 5px 0; font-size: 13px; }
+.aviso-item span:first-child { color: #fca311; font-weight: 700; }
+.aviso-item span:last-child { color: #ff8c00; font-weight: 900; }
+.erro-content { text-align: center; border-color: #ff4d4d; }
+.erro-icon { font-size: 40px; margin-bottom: 10px; color: #ff4d4d; }
+.erro-text { font-size: 13px; color: #c0c5d6; line-height: 1.6; margin-bottom: 15px; }
+.erro-lista { background: #151933; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: left; }
+.erro-item { display: flex; justify-content: space-between; align-items: center; margin: 6px 0; font-size: 13px; }
+.erro-item span:first-child { color: #c0c5d6; }
+.erro-ok { color: #00ff88; font-weight: 900; }
+.erro-x { color: #ff4d4d; font-weight: 900; }
+.btn-erro { background: #ff4d4d; color: #fff; }
+.nada-content { text-align: center; border-color: #ff4d4d; }
+.nada-icon { font-size: 40px; margin-bottom: 10px; color: #ff4d4d; }
+.manutencao-content { text-align: center; border-color: #fca311; }
+.manutencao-icon { font-size: 40px; margin-bottom: 10px; color: #fca311; }
+.download-nome { background: #151933; padding: 10px; border-radius: 8px; text-align: center; color: #4da3ff; font-family: 'Consolas'; font-size: 12px; margin-top: 10px; border: 1px solid #2a2f55; }
 
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 15px;
-        }
-
-        .container {
-            background-color: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 500px;
-            border: 1px solid #334155;
-        }
-
-        h1, h2, h3 {
-            text-align: center;
-            color: #38bdf8;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #94a3b8;
-            font-size: 13px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #475569;
-            background-color: #0f172a;
-            color: #fff;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 11px;
-            background-color: #0284c7;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
-        }
-
-        button:hover { background-color: #0369a1; }
-
-        .hidden { display: none; }
-
-        .card {
-            background-color: #0f172a;
-            border: 1px solid #334155;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 2px 6px;
-            background-color: #0369a1;
-            border-radius: 4px;
-            font-size: 11px;
-        }
-
-        .badge-region { background-color: #d97706; }
-
-        /* Chat Estilos */
-        .chat-box {
-            height: 250px;
-            overflow-y: auto;
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #334155;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .chat-msg {
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            max-width: 85%;
-            word-wrap: break-word;
-        }
-
-        .msg-user {
-            background-color: #1e293b;
-            border: 1px solid #38bdf8;
-            align-self: flex-start;
-        }
-
-        .msg-admin {
-            background-color: #0369a1;
-            align-self: flex-end;
-        }
-
-        .chat-img {
-            max-width: 100%;
-            border-radius: 6px;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .admin-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #64748b;
-            font-size: 12px;
-            cursor: pointer;
-            text-decoration: underline;
-        }
+  /* Animação dos 3 pontinhos */
+  @keyframes loadingDots {
+    0% { content: ""; }
+    33% { content: "."; }
+    66% { content: ".."; }
+    100% { content: "..."; }
+  }
+.loading-dots::after {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    animation: loadingDots 1.2s infinite steps(1);
+  }
     </style>
-</head>
-<body>
-
-<div class="container">
-
-    <!-- SECCIÓN PÚBLICA -->
-    <div id="public-section">
-        <h1>Pedir Cuenta Free Fire</h1>
-
-        <form id="request-form">
-            <div class="form-group">
-                <label for="username">Tu Nombre / Apodo:</label>
-                <input type="text" id="username" required placeholder="Ej. Diego">
-            </div>
-
-            <div class="form-group">
-                <label for="chat-id">Tu ID de Chat Privado (Crea uno o usa tu nombre):</label>
-                <input type="text" id="chat-id" required placeholder="Ej. diego123">
-            </div>
-
-            <div class="form-group">
-                <label for="account-name">Nombre deseado para la cuenta:</label>
-                <input type="text" id="account-name" required placeholder="Ej. ProPlayer2026">
-            </div>
-
-            <div class="form-group">
-                <label for="region">Selecciona la Región:</label>
-                <select id="region" required>
-                    <option value="Indonesia">Indonesia 🇮🇩</option>
-                    <option value="EE.UU. (US)">EE.UU. (US) 🇺🇸</option>
-                    <option value="Sudamérica (SAC)">Sudamérica (SAC) 🌎</option>
-                    <option value="Europa">Europa 🇪🇺</option>
-                    <option value="Brasil">Brasil 🇧🇷</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="pack">Tipo de Cuenta / Pack:</label>
-                <select id="pack" required>
-                    <option value="Pack Indonesia Chetada">Pack Indonesia (Cuenta Chetada)</option>
-                    <option value="Pack VIP Exclusivo">Pack VIP Exclusivo</option>
-                    <option value="Cuenta Básica Gratis">Cuenta Básica Gratis</option>
-                </select>
-            </div>
-
-            <button type="submit">Pedir Cuenta</button>
-        </form>
-
-        <hr style="border-color: #334155; margin: 20px 0;">
-
-        <!-- CHAT PRIVADO DEL JUGADOR -->
-        <h2>Chat Privado con el Creador</h2>
-        <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-bottom: 10px;">
-            Ingresa tu ID de Chat para ver solo tus mensajes.
-        </p>
-
-        <div style="display: flex; gap: 5px; margin-bottom: 10px;">
-            <input type="text" id="user-login-id" placeholder="Ingresa tu ID de Chat">
-            <button onclick="openUserChat()" style="width: 40%; margin-top: 0; background-color: #059669;">Entrar</button>
-        </div>
-
-        <div id="private-chat-area" class="hidden">
-            <div id="user-chat-box" class="chat-box"></div>
-
-            <form id="user-msg-form">
-                <input type="text" id="user-msg-input" placeholder="Escribe un mensaje..." required style="margin-bottom: 5px;">
-                
-                <label style="color: #38bdf8; cursor: pointer; font-size: 12px; display: block; margin-bottom: 5px;">
-                    📷 Adjuntar Captura de pantalla
-                    <input type="file" id="user-img-input" accept="image/*" style="display: none;" onchange="showFileName(this)">
-                </label>
-                <span id="file-name" style="font-size: 11px; color: #94a3b8; display: block; margin-bottom: 5px;"></span>
-
-                <button type="submit" style="background-color: #0284c7;">Enviar al Creador</button>
-            </form>
-        </div>
-
-        <span class="admin-link" onclick="showAdminLogin()">Acceso Privado Creador</span>
+ </head>
+ <body>
+  <div class="container">
+   <h1>ATIVAR SKINS</h1>
+   <p class="sub">DESENVOLVIDO POR @THEUSSYT</p>
+   <div class="box">
+    <div class="box-title">⚠️ ATENÇÃO</div>
+    <p>O ZIP precisa conter os 3 arquivos do mesmo slot:</p>
+    <p>• <code>ProjectData_slot_X.meta</code></p>
+    <p>• <code>ProjectData_slot_X.bytes</code></p>
+    <p>• <code>UserLevelData_X.bytes</code></p>
+   </div>
+   <div class="box file-box">
+    <div class="box-title">📁 Selecionar ZIP</div>
+    <input type="file" id="fileInput" accept=".zip">
+   </div>
+   <button id="btnProcessar">⚡ ATIVAR SKINS &amp; BAIXAR</button>
+   <button class="tiktok" onclick="window.open('https://www.tiktok.com/@theussyt','_blank')">🎵 TIKTOK</button>
+   <button class="discord" onclick="window.open('https://discord.gg/37FKHSm4G','_blank')">💬 DISCORD</button>
+  </div>
+  <div id="consoleModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">💻 CONSOLE</div>
+    <div id="consoleSlotId" class="slot-id">SLOT: - | ID: -</div>
+    <div class="operador">SISTEMA @THEUSSYT</div>
+    <div id="consoleLog" class="console-log"></div>
+    <div id="downloadNome" class="download-nome" style="display:none;"></div>
+    <button id="btnFecharConsole" class="btn-fechar">FECHAR</button>
+   </div>
+  </div>
+  <div id="assetModal" class="modal">
+   <div class="asset-modal-content">
+    <div class="modal-header">📦 ASSETS</div>
+    <div class="asset-modal-list">
+     <div class="asset-item">
+      <div class="asset-item-title">🛡️ PAINEL SKINS</div>
+      <img src="https://i.ibb.co/zh9bMdGn/Screenshot-20260805-173026-Cap-Cut.jpg">
+      <div class="asset-code" id="assetCode2">#ASSET35E4A302A2FF4074B235AF807348A73D6673</div>
+      <button class="btn-copiar" data-target="assetCode2">📋 COPIAR</button>
+     </div>
+     <div class="asset-item">
+      <div class="asset-item-title">🔥 PAINEL SKINS V2</div>
+      <img src="https://i.ibb.co/9HvcCRkT/Free-Fire-2026-08-07-14-36-09.jpg">
+      <div class="asset-code" id="assetCode3">#ASSETEECFC747BB21404D8756BF1F87E6319F6673</div>
+      <button class="btn-copiar" data-target="assetCode3">📋 COPIAR</button>
+     </div>
     </div>
+    <button id="btnFecharAsset" class="btn-fechar" style="margin-top: 12px;">FECHAR</button>
+   </div>
+  </div>
+  <div id="avisoModal" class="modal">
+   <div class="modal-content aviso-content">
+    <div class="aviso-icon">⚠️</div>
+    <div class="modal-header">ATENÇÃO!</div>
+    <div class="aviso-text">Mapa baixado com sucesso!</div>
+    <div class="aviso-text" style="color:#ff8c00; font-weight:700;">Blocos duplicados encontrados:</div>
+    <div id="avisoLista" class="aviso-lista"></div>
+    <button id="btnFecharAviso" class="btn-fechar">ENTENDI</button>
+   </div>
+  </div>
+  <div id="erroModal" class="modal">
+   <div class="modal-content erro-content">
+    <div class="erro-icon">❌</div>
+    <div class="modal-header">ARQUIVO INVÁLIDO!</div>
+    <div id="erroLista" class="erro-lista"></div>
+    <button id="btnFecharErro" class="btn-fechar btn-erro">OK</button>
+   </div>
+  </div>
+  <div id="nadaModal" class="modal">
+   <div class="modal-content nada-content">
+    <div class="nada-icon">🚫</div>
+    <div class="modal-header">NADA FOI ATIVADO!</div>
+    <div class="erro-text">Nenhuma skin encontrada no mapa.</div>
+    <button id="btnFecharNada" class="btn-fechar btn-erro">ENTENDI</button>
+   </div>
+  </div>
+  <div id="manutencaoModal" class="modal">
+   <div class="modal-content manutencao-content">
+    <div class="manutencao-icon">🔧</div>
+    <div class="modal-header">@THEUSSYT</div>
+    <div class="erro-text" id="manutencaoTexto">SITE EM MANUTENÇÃO</div>
+    <button id="btnFecharManutencao" class="btn-fechar">OK</button>
+   </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script>
+        const API_URL = "https://summer-lab-4ad4.theussytt-7d3.workers.dev/patch";
 
-    <!-- SECCIÓN LOGIN CREADOR -->
-    <div id="admin-login-section" class="hidden">
-        <h2>Panel de Creador</h2>
-        <form id="login-form">
-            <div class="form-group">
-                <input type="text" id="admin-user" required placeholder="Usuario">
-            </div>
-            <div class="form-group">
-                <input type="password" id="admin-pass" required placeholder="Contraseña">
-            </div>
-            <button type="submit">Iniciar Sesión</button>
-            <button type="button" onclick="showPublicForm()" style="background-color: #475569;">Volver</button>
-        </form>
-    </div>
+        let logsEmAndamento = false;
+        let intervalDots = null;
 
-    <!-- PANEL DEL CREADOR (ADMIN) -->
-    <div id="admin-panel-section" class="hidden">
-        <h2>Panel de Control - Endry</h2>
-
-        <h3>Cuentas Pedidas:</h3>
-        <div id="requests-list"></div>
-
-        <hr style="border-color: #334155; margin: 20px 0;">
-
-        <h3>Chats Privados con Jugadores:</h3>
-        <div class="form-group">
-            <label>Selecciona un Jugador para responder:</label>
-            <select id="admin-chat-select" onchange="loadAdminChat()">
-                <option value="">-- Selecciona un Chat --</option>
-            </select>
-        </div>
-
-        <div id="admin-chat-box" class="chat-box"></div>
-
-        <form id="admin-reply-form">
-            <input type="text" id="admin-reply-input" placeholder="Responder al jugador..." required style="margin-bottom: 5px;">
-            <button type="submit" style="background-color: #d97706;">Enviar Respuesta</button>
-        </form>
-
-        <button onclick="logoutAdmin()" style="background-color: #b91c1c; margin-top: 15px;">Cerrar Sesión</button>
-    </div>
-
-</div>
-
-<script>
-    const ADMIN_USER = "endry";
-    const ADMIN_PASS = "1234";
-    let activeChatId = "";
-
-    // Navegación
-    function showAdminLogin() {
-        document.getElementById('public-section').classList.add('hidden');
-        document.getElementById('admin-login-section').classList.remove('hidden');
-    }
-
-    function showPublicForm() {
-        document.getElementById('admin-login-section').classList.add('hidden');
-        document.getElementById('admin-panel-section').classList.add('hidden');
-        document.getElementById('public-section').classList.remove('hidden');
-    }
-
-    // 1. Guardar Solicitud
-    document.getElementById('request-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const chatId = document.getElementById('chat-id').value.trim().toLowerCase();
-
-        const newRequest = {
-            id: Date.now(),
-            user: document.getElementById('username').value,
-            chatId: chatId,
-            accountName: document.getElementById('account-name').value,
-            region: document.getElementById('region').value,
-            pack: document.getElementById('pack').value,
-            date: new Date().toLocaleString()
-        };
-
-        let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
-        requests.push(newRequest);
-        localStorage.setItem('ff_requests', JSON.stringify(requests));
-
-        alert("¡Solicitud enviada! Tu ID de chat es: " + chatId);
-        document.getElementById('user-login-id').value = chatId;
-        openUserChat();
-    });
-
-    // 2. Chat Privado del Usuario
-    function openUserChat() {
-        const idInput = document.getElementById('user-login-id').value.trim().toLowerCase();
-        if (!idInput) return alert("Ingresa un ID de chat válido.");
-
-        activeChatId = idInput;
-        document.getElementById('private-chat-area').classList.remove('hidden');
-        renderPrivateChat();
-    }
-
-    function showFileName(input) {
-        const fileName = input.files[0] ? input.files[0].name : '';
-        document.getElementById('file-name').innerText = fileName ? "Imagen: " + fileName : '';
-    }
-
-    document.getElementById('user-msg-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const text = document.getElementById('user-msg-input').value;
-        const imgInput = document.getElementById('user-img-input');
-
-        if (imgInput.files && imgInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                saveMessage(activeChatId, text, e.target.result, 'user');
-                resetUserForm();
-            };
-            reader.readAsDataURL(imgInput.files[0]);
-        } else {
-            saveMessage(activeChatId, text, null, 'user');
-            resetUserForm();
+        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+        function consoleLog(mensagem, corHex = "#ffd700") {
+            const consoleLogDiv = document.getElementById('consoleLog');
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="arrow">→</span><span style="color:${corHex}">${mensagem}</span>`;
+            consoleLogDiv.appendChild(p);
+            consoleLogDiv.scrollTop = consoleLogDiv.scrollHeight;
         }
-    });
+        async function log(mensagem, corHex = "#ffd700", delay = 500) { await sleep(delay); consoleLog(mensagem, corHex); }
 
-    function resetUserForm() {
-        document.getElementById('user-msg-input').value = '';
-        document.getElementById('user-img-input').value = '';
-        document.getElementById('file-name').innerText = '';
-        renderPrivateChat();
-    }
-
-    function saveMessage(chatId, text, image, sender) {
-        let chats = JSON.parse(localStorage.getItem('ff_private_chats')) || {};
-        if (!chats[chatId]) chats[chatId] = [];
-
-        chats[chatId].push({ text, image, sender, date: new Date().toLocaleTimeString() });
-        localStorage.setItem('ff_private_chats', JSON.stringify(chats));
-    }
-
-    function renderPrivateChat() {
-        let chats = JSON.parse(localStorage.getItem('ff_private_chats')) || {};
-        const chatBox = document.getElementById('user-chat-box');
-        const list = chats[activeChatId] || [];
-
-        chatBox.innerHTML = list.length === 0 ? '<p style="font-size:12px; color:#64748b;">No hay mensajes en este chat.</p>' : '';
-
-        list.forEach(m => {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `chat-msg ${m.sender === 'admin' ? 'msg-admin' : 'msg-user'}`;
-            msgDiv.innerHTML = `<strong>${m.sender === 'admin' ? 'Creador' : 'Tú'}:</strong> ${m.text}`;
-            if (m.image) {
-                msgDiv.innerHTML += `<br><img src="${m.image}" class="chat-img"/>`;
-            }
-            chatBox.appendChild(msgDiv);
-        });
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    // 3. Panel de Administrador (Endry)
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (document.getElementById('admin-user').value === ADMIN_USER && document.getElementById('admin-pass').value === ADMIN_PASS) {
-            document.getElementById('admin-login-section').classList.add('hidden');
-            document.getElementById('admin-panel-section').classList.remove('hidden');
-            loadAdminData();
-        } else {
-            alert("Credenciales incorrectas");
+        function iniciarAnimacaoDots() {
+            const consoleLogDiv = document.getElementById('consoleLog');
+            let dots = 0;
+            intervalDots = setInterval(() => {
+                const lastP = consoleLogDiv.querySelector('p:last-child span:last-child');
+                if(lastP && lastP.textContent.includes("ENVIANDO ARQUIVOS AGUARDE")) {
+                    dots = (dots + 1) % 4;
+                    lastP.textContent = "ENVIANDO ARQUIVOS AGUARDE" + ".".repeat(dots);
+                }
+            }, 400);
         }
-    });
+        function pararAnimacaoDots() {
+            if(intervalDots) clearInterval(intervalDots);
+            intervalDots = null;
+        }
 
-    function loadAdminData() {
-        // Cargar Solicitudes
-        const requestsList = document.getElementById('requests-list');
-        let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
-        requestsList.innerHTML = requests.length === 0 ? '<p style="font-size:12px; color:#64748b;">Sin solicitudes.</p>' : '';
+        function abrirConsole(slot, id){
+            document.getElementById('consoleModal').style.display = 'flex';
+            document.getElementById('consoleSlotId').textContent = `SLOT: ${slot} | ID: ${id || "-"}`;
+            document.getElementById('consoleLog').innerHTML = "";
+            document.getElementById('downloadNome').style.display = 'none';
+            document.getElementById('btnFecharConsole').disabled = true;
+            logsEmAndamento = true;
+        }
+        function fecharConsole(){
+            if(logsEmAndamento) return;
+            document.getElementById('consoleModal').style.display = 'none';
+        }
+        document.getElementById('btnFecharConsole').onclick = fecharConsole;
+        function abrirAssetModal(){ document.getElementById('assetModal').style.display = 'flex'; }
+        function fecharAssetModal(){ document.getElementById('assetModal').style.display = 'none'; }
+        document.getElementById('btnFecharAsset').onclick = fecharAssetModal;
+        function abrirAvisoModal(duplicados){ const listaDiv = document.getElementById('avisoLista'); listaDiv.innerHTML = ""; for(const [nome, qtd] of Object.entries(duplicados)){ listaDiv.innerHTML += `<div class="aviso-item"><span>→ ${nome}</span><span>${qtd}x</span></div>`; } document.getElementById('avisoModal').style.display = 'flex'; }
+        function fecharAvisoModal(){ document.getElementById('avisoModal').style.display = 'none'; }
+        document.getElementById('btnFecharAviso').onclick = fecharAvisoModal;
+        function abrirErroModal(checks, extras = []){ const listaDiv = document.getElementById('erroLista'); listaDiv.innerHTML = ""; for(const [nome, status] of Object.entries(checks)){ listaDiv.innerHTML += `<div class="erro-item"><span>${nome}</span><span class="${status? 'erro-ok' : 'erro-x'}">${status? '✓ OK' : '✗ FALTANDO'}</span></div>`; } if(extras.length > 0){ listaDiv.innerHTML += `<div style="border-top:1px solid #2a2f55; margin:8px 0;"></div>`; extras.forEach(arq => { listaDiv.innerHTML += `<div class="erro-item"><span>${arq}</span><span class="erro-x">REMOVER</span></div>`; }) } document.getElementById('erroModal').style.display = 'flex'; }
+        function fecharErroModal(){ document.getElementById('erroModal').style.display = 'none'; }
+        document.getElementById('btnFecharErro').onclick = fecharErroModal;
+        function abrirNadaModal(){ document.getElementById('nadaModal').style.display = 'flex'; }
+        function fecharNadaModal(){ document.getElementById('nadaModal').style.display = 'none'; }
+        document.getElementById('btnFecharNada').onclick = fecharNadaModal;
+        function abrirManutencaoModal(texto){ document.getElementById('manutencaoTexto').innerText = texto; document.getElementById('manutencaoModal').style.display = 'flex'; }
+        function fecharManutencaoModal(){ document.getElementById('manutencaoModal').style.display = 'none'; }
+        document.getElementById('btnFecharManutencao').onclick = fecharManutencaoModal;
 
-        requests.forEach(req => {
-            requestsList.innerHTML += `
-                <div class="card">
-                    <p><strong>Jugador:</strong> ${req.user} (ID Chat: ${req.chatId})</p>
-                    <p><strong>Cuenta:</strong> ${req.accountName}</p>
-                    <p><strong>Región:</strong> <span class="badge badge-region">${req.region}</span></p>
-                    <p><strong>Pack:</strong> <span class="badge">${req.pack}</span></p>
-                </div>
-            `;
-        });
+        document.querySelectorAll('.btn-copiar').forEach(btn => { btn.addEventListener('click', () => { const target = btn.getAttribute('data-target'); copiarCodigo(target, btn); }); });
+        function copiarCodigo(idCodigo, botao){ const code = document.getElementById(idCodigo).textContent; navigator.clipboard.writeText(code).then(() => { botao.textContent = "✅ COPIADO!"; botao.classList.add('copiado'); setTimeout(() => { botao.textContent = "📋 COPIAR"; botao.classList.remove('copiado'); }, 2000); }); }
 
-        // Cargar Lista de Chats en el Dropdown
-        const select = document.getElementById('admin-chat-select');
-        let chats = JSON.parse(localStorage.getItem('ff_private_chats')) || {};
-        select.innerHTML = '<option value="">-- Selecciona un Chat --</option>';
+        async function validarZip(file) {
+            try {
+                const zip = await JSZip.loadAsync(file);
+                const arquivos = Object.keys(zip.files).filter(n =>!zip.files[n].dir);
+                const regexProjectBytes = /^ProjectData_slot_(\d+)\.bytes$/;
+                const regexProjectMeta = /^ProjectData_slot_(\d+)\.meta$/;
+                const regexUserLevel = /^UserLevelData_(\d+)\.bytes$/;
+                const checks = { "ProjectData_slot_X.bytes": false, "ProjectData_slot_X.meta": false, "UserLevelData_X.bytes": false };
+                let extras = []; let slots = [];
+                if(arquivos.length!== 3){ arquivos.forEach(arq => { if(!regexProjectBytes.test(arq) &&!regexProjectMeta.test(arq) &&!regexUserLevel.test(arq)){ extras.push(arq); } }) }
+                arquivos.forEach(arq => {
+                    if(regexProjectBytes.test(arq)) { checks["ProjectData_slot_X.bytes"] = true; slots.push(arq.match(regexProjectBytes)[1]); }
+                    else if(regexProjectMeta.test(arq)) { checks["ProjectData_slot_X.meta"] = true; slots.push(arq.match(regexProjectMeta)[1]); }
+                    else if(regexUserLevel.test(arq)) { checks["UserLevelData_X.bytes"] = true; slots.push(arq.match(regexUserLevel)[1]); }
+                    else { if(!extras.includes(arq)) extras.push(arq); }
+                });
+                const uniqueSlots = [...new Set(slots)]; let slotDiferente = false;
+                if(uniqueSlots.length > 1){ slotDiferente = true; checks["ProjectData_slot_X.bytes"] = false; checks["ProjectData_slot_X.meta"] = false; checks["UserLevelData_X.bytes"] = false; }
+                const tudoCerto = Object.values(checks).every(v => v === true) && extras.length === 0 &&!slotDiferente;
+                return { tudoCerto, checks, extras, slotDiferente, slot: uniqueSlots[0] };
+            } catch(e) { return { tudoCerto: false, checks: {}, extras: [], erro: "ZIP corrompido" }; }
+        }
 
-        Object.keys(chats).forEach(chatId => {
-            select.innerHTML += `<option value="${chatId}">Chat ID: ${chatId}</option>`;
-        });
-    }
+        document.getElementById('btnProcessar').addEventListener('click', async () => {
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.files[0]) return alert("Selecione um arquivo ZIP!");
+            const btn = document.getElementById('btnProcessar');
+            btn.disabled = true; btn.textContent = "⚡ VALIDANDO...";
+            let duplicados = {}; let totalAtivados = 0; let totalNaoEncontrado = 0;
 
-    function loadAdminChat() {
-        const chatId = document.getElementById('admin-chat-select').value;
-        const box = document.getElementById('admin-chat-box');
-        if (!chatId) return box.innerHTML = '';
+            try {
+                const { tudoCerto, checks, extras, slotDiferente, slot } = await validarZip(fileInput.files[0]);
+                if(!tudoCerto){
+                    fecharConsole(); abrirErroModal(checks, extras);
+                    if(slotDiferente) await log(`[ERRO] Arquivos de slots diferentes`, "#ff4d4d", 300);
+                    btn.disabled = false; btn.textContent = "⚡ ATIVAR SKINS & BAIXAR"; return;
+                }
 
-        let chats = JSON.parse(localStorage.getItem('ff_private_chats')) || {};
-        const list = chats[chatId] || [];
+                abrirConsole(slot, "-");
+                await log("ARQUIVOS VALIDADO!", "#00ff88", 400);
+                await log("ENVIANDO ARQUIVOS AGUARDE...", "#4da3ff", 600);
+                iniciarAnimacaoDots();
 
-        box.innerHTML = '';
-        list.forEach(m => {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `chat-msg ${m.sender === 'admin' ? 'msg-admin' : 'msg-user'}`;
-            msgDiv.innerHTML = `<strong>${m.sender === 'admin' ? 'Tú' : 'Jugador'}:</strong> ${m.text}`;
-            if (m.image) {
-                msgDiv.innerHTML += `<br><img src="${m.image}" class="chat-img"/>`;
-            }
-            box.appendChild(msgDiv);
-        });
-        box.scrollTop = box.scrollHeight;
-    }
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                const res = await fetch(API_URL, { method: 'POST', body: formData });
+                const data = await res.json();
 
-    document.getElementById('admin-reply-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const chatId = document.getElementById('admin-chat-select').value;
-        const text = document.getElementById('admin-reply-input').value;
+                if(data.success === false){
+                    pararAnimacaoDots();
+                    await log(`[ERRO] ${data.erro}`, "#ff4d4d", 300);
+                    logsEmAndamento = false;
+                    document.getElementById('btnFecharConsole').disabled = false;
+                    fecharConsole();
+                    abrirManutencaoModal(data.erro);
+                    btn.disabled = false; btn.textContent = "⚡ ATIVAR SKINS & BAIXAR";
+                    return;
+                }
+                if (!res.ok) throw new Error(data.error || "Erro no servidor");
 
-        if (!chatId) return alert("Selecciona un chat primero.");
+                document.getElementById('consoleSlotId').textContent = `SLOT: ${data.slot} | ID: ${data.playerID}`;
+                pararAnimacaoDots();
+                await log("PROCESSANDO...", "#4da3ff", 400);
 
-        saveMessage(chatId, text, null, 'admin');
-        document.getElementById('admin-reply-input').value = '';
-        loadAdminChat();
-    });
+                const COR_MAPA = { "green": "#00ff88", "orange": "#ff8c00", "red": "#ff4d4d", "blue": "#4da3ff", "yellow": "#ffd700", "white": "#ffffff" }
 
-    function logoutAdmin() {
-        document.getElementById('admin-panel-section').classList.add('hidden');
-        showPublicForm();
-    }
-</script>
-
-</body>
-</html>
+                for(const l of data.logs){
+                    let texto = ""; let corHex = "#ffd700";
+                    if(typeof l === 'object' && l!== null && l.text){
+                        texto = l.text; corHex = COR_MAPA[l.color] || "#ffd700";
+                        if(texto.includes("ATIVADO")) totalAtivados++;
+                        if(texto.includes("NÃO ENCONTRADO")) totalNaoEnc
