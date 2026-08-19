@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Cuentas Free Fire</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #334155;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #38bdf8;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #38bdf8;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0369a1;
+        }
+
+        .admin-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .admin-link:hover {
+            color: #94a3b8;
+        }
+
+        /* Modal / Paneles */
+        .hidden {
+            display: none;
+        }
+
+        .request-card {
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .request-card p {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0369a1;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .alert {
+            padding: 10px;
+            background-color: #15803d;
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SECCIÓN: FORMULARIO PÚBLICO -->
+    <div id="public-section">
+        <h1>Pedir Cuenta Free Fire</h1>
+        <div id="success-alert" class="alert hidden">
+            ¡Solicitud enviada con éxito! Espera a que el creador te entregue los datos.
+        </div>
+        <form id="request-form">
+            <div class="form-group">
+                <label for="username">Tu Nombre / Apodo:</label>
+                <input type="text" id="username" required placeholder="Ej. Diego">
+            </div>
+
+            <div class="form-group">
+                <label for="account-name">Nombre deseado para la cuenta:</label>
+                <input type="text" id="account-name" required placeholder="Ej. ProPlayer2026">
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Medio de Contacto (WhatsApp o Email):</label>
+                <input type="text" id="contact" required placeholder="+57 300 000 0000 o correo@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="pack">Selecciona el Pack / Tipo de Cuenta:</label>
+                <select id="pack" required>
+                    <option value="Pack Indonesia Chetada">Pack Indonesia (Cuenta Chetada)</option>
+                    <option value="Cuenta Perdí Mi Cuenta">Recuperación / Perdí mi cuenta</option>
+                    <option value="Cuenta Básica Gratis">Cuenta Básica Gratis</option>
+                </select>
+            </div>
+
+            <button type="submit">Pedir Cuenta</button>
+        </form>
+
+        <span class="admin-link" onclick="showAdminLogin()">Acceso Creador (Admin)</span>
+    </div>
+
+    <!-- SECCIÓN: LOGIN DE ADMINISTRADOR -->
+    <div id="admin-login-section" class="hidden">
+        <h2>Acceso de Creador</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="admin-user">Usuario:</label>
+                <input type="text" id="admin-user" placeholder="endry" required>
+            </div>
+            <div class="form-group">
+                <label for="admin-pass">Contraseña:</label>
+                <input type="password" id="admin-pass" placeholder="1234" required>
+            </div>
+            <button type="submit">Entrar al Panel</button>
+            <button type="button" onclick="showPublicForm()" style="background-color: #475569;">Volver</button>
+        </form>
+    </div>
+
+    <!-- SECCIÓN: PANEL DEL CREADOR (ADMIN) -->
+    <div id="admin-panel-section" class="hidden">
+        <h2>Panel de Solicitudes Recibidas</h2>
+        <p style="text-align: center; color: #94a3b8; font-size: 12px; margin-bottom: 15px;">
+            Aquí ves las cuentas que te han pedido los usuarios.
+        </p>
+
+        <div id="requests-list">
+            <!-- Las solicitudes se cargan dinámicamente aquí -->
+        </div>
+
+        <button onclick="logoutAdmin()" style="background-color: #b91c1c;">Cerrar Sesión</button>
+    </div>
+
+</div>
+
+<script>
+    // Configuración del Administrador
+    const ADMIN_USER = "endry";
+    const ADMIN_PASS = "1234";
+
+    // Elementos DOM
+    const publicSection = document.getElementById('public-section');
+    const adminLoginSection = document.getElementById('admin-login-section');
+    const adminPanelSection = document.getElementById('admin-panel-section');
+    const requestForm = document.getElementById('request-form');
+    const loginForm = document.getElementById('login-form');
+    const requestsList = document.getElementById('requests-list');
+    const successAlert = document.getElementById('success-alert');
+
+    // Manejo de Navegación entre vistas
+    function showAdminLogin() {
+        publicSection.classList.add('hidden');
+        adminLoginSection.classList.remove('hidden');
+    }
+
+    function showPublicForm() {
+        adminLoginSection.classList.add('hidden');
+        adminPanelSection.classList.add('hidden');
+        publicSection.classList.remove('hidden');
+    }
+
+    // 1. Guardar Solicitud (Autoguardado en LocalStorage)
+    requestForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const newRequest = {
+            id: Date.now(),
+            user: document.getElementById('username').value,
+            accountName: document.getElementById('account-name').value,
+            contact: document.getElementById('contact').value,
+            pack: document.getElementById('pack').value,
+            date: new Date().toLocaleString()
+        };
+
+        // Obtener solicitudes guardadas previa
+        let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
+        requests.push(newRequest);
+
+        // Auto-guardado
+        localStorage.setItem('ff_requests', JSON.stringify(requests));
+
+        // Resetear Formulario
+        requestForm.reset();
+        successAlert.classList.remove('hidden');
+
+        setTimeout(() => {
+            successAlert.classList.add('hidden');
+        }, 4000);
+    });
+
+    // 2. Sistema de Registro/Login Creador
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const userInput = document.getElementById('admin-user').value;
+        const passInput = document.getElementById('admin-pass').value;
+
+        if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
+            adminLoginSection.classList.add('hidden');
+            adminPanelSection.classList.remove('hidden');
+            loadRequests();
+        } else {
+            alert("Usuario o contraseña incorrectos.");
+        }
+    });
+
+    // 3. Cargar lista de solicitudes en el panel del creador
+    function loadRequests() {
+        requestsList.innerHTML = '';
+        let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
+
+        if (requests.length === 0) {
+            requestsList.innerHTML = '<p style="text-align:center; color: #64748b;">No hay solicitudes pendientes.</p>';
+            return;
+        }
+
+        requests.forEach((req, index) => {
+            const card = document.createElement('div');
+            card.className = 'request-card';
+            card.innerHTML = `
+                <p><strong>Usuario:</strong> ${req.user}</p>
+                <p><strong>Nombre Cuenta Deseada:</strong> ${req.accountName}</p>
+                <p><strong>Contacto:</strong> ${req.contact}</p>
+                <p><strong>Tipo/Pack:</strong> <span class="badge">${req.pack}</span></p>
+                <p style="font-size:11px; color:#64748b; margin-top:5px;">Fecha: ${req.date}</p>
+                <button onclick="deleteRequest(${req.id})" style="background-color: #ef4444; padding: 5px; margin-top: 8px; font-size: 12px;">Marcar como Entregada / Borrar</button>
+            `;
+            requestsList.appendChild(card);
+        });
+    }
+
+    // Borrar Solicitud entregada
+    function deleteRequest(id) {
+        let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
+        requests = requests.filter(req => req.id !== id);
+        localStorage.setItem('ff_requests', JSON.stringify(requests));
+        loadRequests();
+    }
+
+    function logoutAdmin() {
+        adminPanelSection.classList.add('hidden');
+        publicSection.classList.remove('hidden');
+        loginForm.reset();
+    }
+</script>
+
+</body>
+                  </html>
+          
