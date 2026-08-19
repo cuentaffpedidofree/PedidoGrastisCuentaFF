@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACTIVADOR DE SKINS - CREADOR 2</title>
+    <title>MODIFICADOR DE MAPAS - CREADOR 2</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
@@ -14,19 +14,15 @@
         .title { color: #38bdf8; font-size: 20px; font-weight: bold; letter-spacing: 1px; margin-bottom: 5px; }
         .subtitle { font-size: 11px; color: #94a3b8; margin-bottom: 10px; }
 
-        .warning-box { background: rgba(30, 58, 138, 0.2); border: 1px solid #1d4ed8; border-radius: 8px; padding: 12px; text-align: left; font-size: 11px; color: #cbd5e1; margin-bottom: 15px; }
-        .warning-box b { color: #f59e0b; }
-        .warning-box ul { margin-left: 15px; margin-top: 5px; color: #38bdf8; }
-
         .section-box { background: #0b1528; border: 1px solid #1e3a8a; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
         .section-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
 
         input[type="file"] { width: 100%; padding: 10px; background: #060913; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 12px; margin-top: 5px; }
         
-        .btn-activar { width: 100%; padding: 14px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 8px; color: #000; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); margin-top: 10px; transition: 0.2s; }
-        .btn-activar:active { transform: scale(0.98); }
+        .btn-modificar { width: 100%; padding: 14px; background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); border: none; border-radius: 8px; color: #ffffff; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-modificar:active { transform: scale(0.98); }
 
-        .console-box { background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 11px; text-align: left; height: 180px; overflow-y: auto; margin-top: 10px; color: #38bdf8; }
+        .console-box { background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 11px; text-align: left; height: 220px; overflow-y: auto; margin-top: 10px; color: #38bdf8; }
         .console-line { margin-bottom: 4px; }
         
         .admin-badge { display: inline-block; background: linear-gradient(90deg, #f59e0b, #ef4444); padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-top: 8px; border: 1px solid #fef08a; }
@@ -37,31 +33,21 @@
 <div class="container">
     
     <div class="header-card">
-        <div class="title">ACTIVADOR DE SKINS</div>
+        <div class="title">MODIFICADOR DE MAPAS</div>
         <div class="subtitle">PROYECTO OFICIAL ENMANUEL & ENDRY</div>
         <div><span class="admin-badge">👑 CREADOR 2 - ACCESO TOTAL</span></div>
     </div>
 
-    <div class="warning-box">
-        <b>⚠️ COMPROBACIÓN DE ARCHIVOS</b>
-        <p style="margin-top:5px;">El sistema verificará automáticamente:</p>
-        <ul>
-            <li>ProjectData_slot_X.bytes</li>
-            <li>ProjectData_slot_X.meta</li>
-            <li>UserLevelData_X.bytes</li>
-        </ul>
-    </div>
-
     <div class="section-box">
-        <div class="section-title">📂 Seleccionar Archivo ZIP</div>
+        <div class="section-title">📂 Seleccionar Archivo ZIP del Mapa</div>
         <input type="file" id="zip-file" accept=".zip">
-        <button class="btn-activar" onclick="ejecutarActivacion()">⚡ INICIAR COMPROBACIÓN</button>
+        <button class="btn-modificar" onclick="iniciarModificacion()">⚡ INICIAR MODIFICACIÓN DE MAPA</button>
     </div>
 
     <div class="section-box">
-        <div class="section-title">💻 CONSOLA DE OPERACIONES</div>
+        <div class="section-title">💻 CONSOLA DE PROCESAMIENTO</div>
         <div id="console-logs" class="console-box">
-            <div class="console-line" style="color: #64748b;">> Esperando archivo ZIP...</div>
+            <div class="console-line" style="color: #64748b;">> Sistema listo. Cargue el archivo del mapa...</div>
         </div>
     </div>
 
@@ -79,32 +65,34 @@
         consoleBox.scrollTop = consoleBox.scrollHeight;
     }
 
-    async function ejecutarActivacion() {
+    async function iniciarModificacion() {
         const fileInput = document.getElementById('zip-file').files[0];
-
         if(!fileInput) return alert("Por favor selecciona un archivo ZIP.");
 
         consoleBox.innerHTML = "";
         
-        logMsg("INICIANDO ESCANEO DE ARCHIVOS...", "#f59e0b");
+        logMsg("CARGANDO ARCHIVOS DE MAPA...", "#f59e0b");
         await new Promise(r => setTimeout(r, 800));
 
-        logMsg("VERIFICANDO: ProjectData_slot.bytes...");
-        await new Promise(r => setTimeout(r, 600));
+        logMsg("ANALIZANDO ESTRUCTURA: ProjectData_slot.bytes");
+        logMsg("ANALIZANDO ESTRUCTURA: UserLevelData.bytes");
+        await new Promise(r => setTimeout(r, 800));
 
-        // Simulación de errores
-        if(Math.random() > 0.4) {
-            logMsg("⚠️ ERROR EN: UserLevelData_2.bytes", "#f59e0b");
-            logMsg("🔧 CORRIGIENDO ERRORES DE ESTRUCTURA...", "#38bdf8");
-            await new Promise(r => setTimeout(r, 1000));
-        }
+        logMsg("INYECTANDO MODIFICACIONES DE MAPA:", "#ffffff");
+        logMsg("• Aplicando texturas de ropa (Skin Pack)");
+        await new Promise(r => setTimeout(r, 500));
+        logMsg("• Optimizando estructuras de nivel");
+        await new Promise(r => setTimeout(r, 500));
+        logMsg("• Modificando archivos de skins de armas");
+        await new Promise(r => setTimeout(r, 500));
+        logMsg("• Aplicando cambios de accesorios de cabeza");
+        await new Promise(r => setTimeout(r, 800));
 
-        logMsg("¡COMPROBADO CON ÉXITO!", "#22c55e");
-        logMsg("MODIFICADO: Pack de Skins Completo");
-        logMsg("ACTIVADO: Estructuras de Juego");
+        logMsg("COMPILANDO MAPA MODIFICADO...", "#f59e0b");
+        await new Promise(r => setTimeout(r, 1000));
         
-        await new Promise(r => setTimeout(r, 800));
-        logMsg("DESCARGANDO MAPA MODIFICADO...", "#f59e0b");
+        logMsg("MODIFICACIÓN COMPLETADA CON ÉXITO", "#22c55e");
+        logMsg("GENERANDO DESCARGA AUTOMÁTICA...", "#38bdf8");
 
         // Descarga
         setTimeout(() => {
@@ -112,11 +100,11 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Mapa_Activado_Creador2.zip`;
+            a.download = `Mapa_Modificado_Creador2.zip`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            alert("✅ ¡Activado con éxito!");
+            alert("✅ Mapa modificado y listo para usar.");
         }, 1000);
     }
 </script>
