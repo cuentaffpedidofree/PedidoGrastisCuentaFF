@@ -3,394 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF ATTCUENTA - Ultimate Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <title>FF ENMANUEL ADM8 - PRO SYSTEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
-        body { background: #060913; color: white; text-align: center; padding: 12px; min-height: 100vh; overflow-x: hidden; }
-
-        .game-title { font-family: 'Orbitron', sans-serif; font-size: 26px; color: #ff4655; text-shadow: 0 0 15px rgba(255, 70, 85, 0.8); margin-bottom: 12px; letter-spacing: 1px; }
-        .card { background: rgba(15, 23, 42, 0.95); border-radius: 14px; padding: 18px; max-width: 500px; margin: 12px auto; border: 1px solid rgba(255, 70, 85, 0.4); box-shadow: 0 8px 25px rgba(0,0,0,0.6); }
-        .card-inner { background: #0f172a; padding: 12px; border-radius: 10px; border: 1px solid #334155; margin-bottom: 10px; text-align: left; }
-
-        /* Barra Triple de Monedas */
-        .stat-box { display: flex; justify-content: space-around; align-items: center; background: #0b1120; padding: 10px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #ff4655; }
-        .stat-item { text-align: center; }
-        .stat-title { font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
-        .stat-val { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: bold; color: #38bdf8; }
-
-        button {
-            width: 100%; padding: 11px; background: linear-gradient(135deg, #ff4655 0%, #b91c1c 100%);
-            border: none; border-radius: 8px; color: white; font-family: 'Orbitron', sans-serif;
-            font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin: 4px 0;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4); transition: 0.2s;
-        }
-        button:active { transform: scale(0.98); }
-        button.btn-blue { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); }
-        button.btn-green { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4); }
-        button.btn-purple { background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%); box-shadow: 0 4px 12px rgba(147, 51, 234, 0.4); }
-        button.btn-gold { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: #000; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.4); }
-        button.btn-gray { background: #334155; box-shadow: none; }
-
-        input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #0b1120; color: white; margin-bottom: 8px; font-size: 13px; text-align: center; }
+        :root { --primary: #ff4655; --gold: #fbbf24; --dark: #060913; }
+        body { background: var(--dark); color: white; font-family: 'Rajdhani', sans-serif; text-align: center; padding: 10px; }
+        .card { background: #0f172a; border-radius: 15px; padding: 20px; max-width: 450px; margin: 10px auto; border: 1px solid #334155; }
+        .btn { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .btn-gold { background: var(--gold); color: black; }
+        .btn-main { background: var(--primary); color: white; }
         .hidden { display: none !important; }
-
-        .profile-header { display: flex; align-items: center; gap: 10px; }
-        .avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ff4655; object-fit: cover; background: #334155; }
-        
-        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; margin-top: 3px; }
-        .badge-endry { background: linear-gradient(90deg, #f59e0b, #ef4444); color: white; border: 1px solid #fef08a; }
-
-        /* Selector Avatares */
-        .avatar-selector { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-        .avatar-option { width: 50px; height: 50px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; object-fit: cover; transition: 0.2s; }
-        .avatar-option.selected { border-color: #ff4655; transform: scale(1.1); box-shadow: 0 0 10px #ff4655; }
-
-        /* DÚO DINÁMICO VIP INTERFAZ */
-        .duo-card-vip { background: linear-gradient(135deg, #2e0854 0%, #18032b 100%); border: 2px solid #a855f7; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); position: relative; overflow: hidden; }
-        .duo-header { display: flex; justify-content: space-around; align-items: center; margin: 10px 0; }
-        .duo-heart { font-size: 28px; animation: pulse 1.2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-        .progress-bar-bg { background: #0b1120; border-radius: 10px; height: 12px; width: 100%; border: 1px solid #a855f7; overflow: hidden; margin: 8px 0; }
-        .progress-bar-fill { background: linear-gradient(90deg, #ec4899, #a855f7); height: 100%; width: 65%; transition: 0.3s; }
-
-        /* MODO SIN INTERNET BANNERS */
-        .offline-banner { background: #7f1d1d; border: 1px solid #ef4444; color: white; padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 12px; }
-
-        /* Galería de Tiro */
-        #weapon-arena { width: 100%; height: 150px; background: #0b1120; border: 2px solid #38bdf8; border-radius: 10px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; margin-bottom: 10px; }
-        .target-btn { position: absolute; width: 42px; height: 42px; background: #ff4655; border-radius: 50%; border: 3px solid white; cursor: pointer; box-shadow: 0 0 10px #ff4655; }
+        .virtual-card { background: linear-gradient(135deg, #1e293b, #000); border: 2px solid var(--gold); border-radius: 15px; padding: 20px; margin: 15px 0; }
     </style>
 </head>
 <body>
 
-    <!-- BANNER DE ESTADO OFFLINE AUTODETECTADO -->
-    <div id="offline-alert" class="offline-banner hidden">
-        ⚠️ <b>MODO SIN INTERNET ACTIVADO</b> - Estás jugando en modo local sin conexión.
-    </div>
-
-    <!-- 1. LOGIN / SELECCIÓN DE PERSONAJE -->
+    <!-- LOGIN -->
     <div id="sec-login" class="card">
-        <h1 class="game-title">FF ATTCUENTA</h1>
-        <h3>Selecciona tu personaje</h3>
-        <p style="font-size: 11px; color: #94a3b8; margin-bottom: 10px;">Elige tu Avatar Anime antes de ingresar:</p>
-        
-        <div class="avatar-selector">
-            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Goku" class="avatar-option selected" onclick="seleccionarAvatarInicio(this, 'https://api.dicebear.com/7.x/bottts/svg?seed=Goku')">
-            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Naruto" class="avatar-option" onclick="seleccionarAvatarInicio(this, 'https://api.dicebear.com/7.x/adventurer/svg?seed=Naruto')">
-            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Luffy" class="avatar-option" onclick="seleccionarAvatarInicio(this, 'https://api.dicebear.com/7.x/adventurer/svg?seed=Luffy')">
-            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Zoro" class="avatar-option" onclick="seleccionarAvatarInicio(this, 'https://api.dicebear.com/7.x/adventurer/svg?seed=Zoro')">
-        </div>
-
-        <form id="form-auth">
-            <input type="text" id="auth-name" placeholder="Nick / Nombre de Usuario" required>
-            <input type="email" id="auth-email" placeholder="correo@ejemplo.com" required>
-            <button type="submit" class="btn-green">ENTRAR AL LOBBY</button>
-        </form>
+        <h1>FF ENMANUEL ADM8</h1>
+        <input type="text" id="auth-name" placeholder="Tu Nombre de Jugador" style="width:90%; padding:10px; margin-bottom:10px;">
+        <button class="btn btn-main" onclick="iniciarSesion()">ENTRAR AL SISTEMA</button>
     </div>
 
-    <!-- 2. LOBBY PRINCIPAL -->
+    <!-- MAIN LOBBY -->
     <div id="sec-main" class="hidden">
         <div class="card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <div class="profile-header">
-                    <img id="user-avatar" src="" alt="Avatar" class="avatar">
-                    <div style="text-align:left;">
-                        <span id="user-display" style="font-size:14px; font-weight:bold; color:white;">Jugador: ---</span><br>
-                        <span id="badge-container"></span>
-                    </div>
-                </div>
-                <button onclick="cerrarSesion()" class="btn-gray" style="width:auto; padding:5px 10px; font-size:10px;">Salir</button>
+            <h2 id="welcome-msg">Bienvenido</h2>
+            <div class="virtual-card">
+                <p>SALDO DIAMANTES</p>
+                <h1 id="ui-diamantes">0 💎</h1>
+                <p id="ui-user" style="font-size:12px;"></p>
             </div>
-
-            <!-- TRES MONEDAS (TRIPLE MARCADOR) -->
-            <div class="stat-box">
-                <div class="stat-item">
-                    <div class="stat-title">AttCoins</div>
-                    <div id="val-attcoins" class="stat-val">0 🪙</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-title">Diamantes <span onclick="toggleOcultarDiamantes()" style="cursor:pointer;" title="Ocultar/Mostrar">👁️</span></div>
-                    <div id="val-diamantes" class="stat-val" style="color:#22c55e;">0 💎</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-title">Vouchers</div>
-                    <div id="val-vouchers" class="stat-val" style="color:#a855f7;">0 🎟️</div>
-                </div>
-            </div>
-
-            <!-- BOTONERA DE NAVEGACIÓN -->
-            <button class="btn-purple" onclick="mostrarSeccion('duo')">💞 Dúo Dinámico VIP (Gratis)</button>
-            <button class="btn-gold" onclick="mostrarSeccion('armas')">🎯 Galería de Tiro de Armas</button>
-            <button class="btn-blue" onclick="mostrarSeccion('offline')">📡 Modo Sin Internet / Offline</button>
-            <button class="btn-green" onclick="mostrarSeccion('controles')">🎮 Configurar Controles HUD</button>
-            <button class="btn-gray" id="btn-admin-panel" onclick="mostrarSeccion('admin')" class="hidden">👑 Panel Creador (Endry)</button>
-            <button class="btn-gray" onclick="mostrarSeccion('ajustes')">⚙️ Ajustes & Votar</button>
+            
+            <button class="btn btn-gold" onclick="mostrar('sec-tienda')">💳 CANJEAR SUSCRIPCIONES</button>
+            <button class="btn btn-main" onclick="toggleSonido()">🔊 TOGGLE SONIDO</button>
+            <button id="btn-admin" class="btn" style="background:#8b5cf6;" onclick="mostrar('sec-admin')">👑 PANEL ENMANUEL ADM8</button>
         </div>
+    </div>
 
-        <!-- SECCIÓN: DÚO DINÁMICO MEJORADO (NUEVA INTERFAZ) -->
-        <div id="sec-duo" class="card hidden">
-            <h3 style="color:#ec4899; font-family:'Orbitron';">💞 Dúo Dinámico VIP</h3>
-            <p style="font-size:11px; color:#94a3b8; margin-bottom:12px;">Conéctate con tu pareja de batalla y gana bonos mutuos:</p>
-
-            <div id="box-no-duo">
-                <input type="text" id="input-duo-nombre" placeholder="Nombre de tu Dúo / Amigo">
-                <button onclick="vincularDuoGratis()" class="btn-green">VINCULAR GRATIS (+100 💎 y +5 🎟️)</button>
-            </div>
-
-            <div id="box-si-duo" class="hidden">
-                <div class="duo-card-vip">
-                    <div style="font-size:11px; color:#c084fc; text-transform:uppercase; font-weight:bold;">Vínculo Eterno Activo</div>
-                    <div class="duo-header">
-                        <div>
-                            <img id="duo-my-avatar" src="" class="avatar" style="width:40px; height:40px;">
-                            <p id="duo-my-name" style="font-size:11px; font-weight:bold; margin-top:2px;"></p>
-                        </div>
-                        <div class="duo-heart">💖</div>
-                        <div>
-                            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=DuoPartner" class="avatar" style="width:40px; height:40px; border-color:#ec4899;">
-                            <p id="txt-duo-nombre" style="font-size:11px; font-weight:bold; margin-top:2px; color:#ec4899;">---</p>
-                        </div>
-                    </div>
-
-                    <div style="text-align:left; font-size:11px; color:#e9d5ff; display:flex; justify-between; margin-top:5px;">
-                        <span>Nivel de Afinidad: <b>NVL 4</b></span>
-                        <span style="float:right;"><b id="txt-duo-pts">320</b> / 500 PTS</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="duo-progress-fill"></div>
-                    </div>
-
-                    <button onclick="enviarRegaloDuo()" class="btn-purple" style="font-size:10px; margin-top:8px;">🎁 ENVIAR REGALO DE AMOR (+50 PTS)</button>
-                </div>
-            </div>
+    <!-- TIENDA / CANJE -->
+    <div id="sec-tienda" class="card hidden">
+        <h3>🛍️ TIENDA PRO</h3>
+        <div class="card" style="border: 1px solid var(--gold);">
+            <p>Suscripción VIP (Diamantes)</p>
+            <button class="btn btn-gold" onclick="canjear(500)">CANJEAR 500 💎</button>
         </div>
+        <button class="btn" onclick="mostrar('sec-main')">VOLVER</button>
+    </div>
 
-        <!-- SECCIÓN: MODO SIN INTERNET Y VOTACIÓN -->
-        <div id="sec-offline" class="card hidden">
-            <h3 style="color:#ef4444; font-family:'Orbitron';">📡 Modo Sin Internet (Offline)</h3>
-            <p style="font-size:11px; color:#94a3b8; margin-bottom:10px;">Juega y vota el rendimiento sin consumir datos:</p>
-
-            <div class="card-inner" style="border-color:#ef4444;">
-                <h4>⭐ Votar Juego Sin Internet</h4>
-                <p style="font-size:11px; color:#94a3b8; margin-bottom:8px;">¿Qué tal funciona la versión local sin datos?</p>
-                <button onclick="votarJuegoOffline('⭐⭐⭐⭐⭐ Excelente Sin Red')" class="btn-gold" style="font-size:10px;">⭐ Votar 5 Estrellas (Offline)</button>
-                <button onclick="votarJuegoOffline('⭐⭐⭐⭐ Rápido y Fluido')" class="btn-blue" style="font-size:10px; margin-top:4px;">⭐ Votar 4 Estrellas (Rápido)</button>
-            </div>
-
-            <div class="card-inner">
-                <h4>🎯 Práctica Offline de Tiro</h4>
-                <p style="font-size:11px; color:#94a3b8;">Entrena tu puntería sin gastar datos de internet.</p>
-                <button onclick="mostrarSeccion('armas')" class="btn-green" style="font-size:11px; margin-top:5px;">IR A GALERÍA OFFLINE</button>
-            </div>
-        </div>
-
-        <!-- SECCIÓN: GALERÍA DE TIRO -->
-        <div id="sec-armas" class="card hidden">
-            <h3 style="color:#38bdf8;">🎯 Galería de Tiro FF</h3>
-            <p style="font-size:11px; color:#94a3b8; margin-bottom:10px;">Gana Diamantes y Vouchers disparando:</p>
-
-            <div id="weapon-arena">
-                <div id="target" class="target-btn" onclick="dispararBlanco()" style="top:40%; left:45%;"></div>
-                <p id="weapon-status" style="font-size:11px; color:#94a3b8; position:absolute; bottom:5px;">Dispara al blanco rojo</p>
-            </div>
-            <p style="font-size:12px;">Puntos Acumulados: <b id="txt-puntos-tiro" style="color:#22c55e;">0</b></p>
-        </div>
-
-        <!-- SECCIÓN: CONTROLES / HUD -->
-        <div id="sec-controles" class="card hidden">
-            <h3>🎮 Configurar Controles HUD</h3>
-            <div class="card-inner">
-                <label style="font-size:11px;">Sensibilidad General:</label>
-                <input type="range" min="1" max="100" value="85" id="sensibilidad">
-
-                <label style="font-size:11px; margin-top:8px; display:block;">Botón de Disparo:</label>
-                <input type="range" min="30" max="100" value="60" id="size-btn">
-
-                <button onclick="guardarControles()" class="btn-green" style="font-size:11px; margin-top:8px;">GUARDAR CONTROLES</button>
-            </div>
-        </div>
-
-        <!-- PANEL ADMIN (Endry) -->
-        <div id="sec-admin" class="card hidden">
-            <h3 style="color:#f59e0b;">👑 Panel Creador (Endry)</h3>
-            <input type="text" id="admin-target-user" placeholder="Nombre de Usuario">
-            <select id="admin-action-type">
-                <option value="add_diamonds">Dar Diamantes 💎</option>
-                <option value="add_vouchers">Dar Vouchers 🎟️</option>
-                <option value="add_coins">Dar AttCoins 🪙</option>
-            </select>
-            <input type="number" id="admin-amount" value="500">
-            <button onclick="ejecutarAccionAdmin()" class="btn-gold">APLICAR</button>
-        </div>
-
-        <!-- AJUSTES Y VALORACIÓN -->
-        <div id="sec-ajustes" class="card hidden">
-            <h3>⚙️ Ajustes del Juego</h3>
-            <div class="card-inner">
-                <h4>⭐ Vota el Juego General</h4>
-                <button onclick="votarJuego('⭐⭐⭐⭐⭐ Increíble')" class="btn-gold" style="font-size:11px;">CALIFICAR CON 5 ESTRELLAS ⭐</button>
-            </div>
-        </div>
+    <!-- PANEL ADMIN -->
+    <div id="sec-admin" class="card hidden">
+        <h3>👑 PANEL DE CONTROL</h3>
+        <button class="btn btn-gold" onclick="darDiamantes(5000)">DAR +5000 DIAMANTES</button>
+        <button class="btn" onclick="subirDuoMax()">⚡ SUBIR DÚO MÁXIMO</button>
+        <button class="btn" onclick="mostrar('sec-main')">VOLVER</button>
     </div>
 
 <script>
-    // ESTADO GLOBAL CON LA NUEVA MONEDA (VOUCHERS)
-    let usuarioActual = JSON.parse(localStorage.getItem('ff_sesion')) || null;
-    let avatarUrl = localStorage.getItem('ff_avatar') || 'https://api.dicebear.com/7.x/bottts/svg?seed=Goku';
-    let attCoins = parseInt(localStorage.getItem('ff_attcoins')) || 300;
-    let diamantes = parseInt(localStorage.getItem('ff_diamantes')) || 150;
-    let vouchers = parseInt(localStorage.getItem('ff_vouchers')) || 10;
-    let diamantesOcultos = false;
+    let user = { name: "", balance: 1000 };
+    let sonido = true;
 
-    let duoNombre = localStorage.getItem('ff_duo_name') || '';
-    let duoPuntos = parseInt(localStorage.getItem('ff_duo_pts')) || 320;
-    let puntosTiro = 0;
-
-    window.addEventListener('DOMContentLoaded', () => {
-        if (usuarioActual) cargarPanelJuego();
-
-        // DETECTOR DE CONEXIÓN A INTERNET
-        window.addEventListener('offline', () => {
-            document.getElementById('offline-alert').classList.remove('hidden');
-        });
-        window.addEventListener('online', () => {
-            document.getElementById('offline-alert').classList.add('hidden');
-        });
-    });
-
-    function seleccionarAvatarInicio(el, url) {
-        document.querySelectorAll('.avatar-option').forEach(img => img.classList.remove('selected'));
-        el.classList.add('selected');
-        avatarUrl = url;
-    }
-
-    document.getElementById('form-auth').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const nombre = document.getElementById('auth-name').value.trim();
-        const email = document.getElementById('auth-email').value.trim().toLowerCase();
+    function iniciarSesion() {
+        user.name = document.getElementById('auth-name').value;
+        if(user.name.trim() === "") return alert("Nombre requerido");
         
-        usuarioActual = { nombre, email };
-        localStorage.setItem('ff_sesion', JSON.stringify(usuarioActual));
-        localStorage.setItem('ff_avatar', avatarUrl);
-        cargarPanelJuego();
-    });
-
-    function cargarPanelJuego() {
         document.getElementById('sec-login').classList.add('hidden');
         document.getElementById('sec-main').classList.remove('hidden');
-
-        document.getElementById('user-display').innerText = usuarioActual.nombre;
-        document.getElementById('user-avatar').src = avatarUrl;
-
-        if (usuarioActual.nombre.toLowerCase() === 'endry') {
-            document.getElementById('badge-container').innerHTML = `<span class="badge badge-endry">👑 CREADOR LEYENDA</span>`;
-            document.getElementById('btn-admin-panel').classList.remove('hidden');
+        document.getElementById('ui-user').innerText = "ID: " + user.name.toUpperCase();
+        document.getElementById('welcome-msg').innerText = "Hola, " + user.name;
+        
+        // Verificación exclusiva
+        if(user.name.toLowerCase() === "enmanuel adm8") {
+            document.getElementById('btn-admin').classList.remove('hidden');
+        } else {
+            document.getElementById('btn-admin').classList.add('hidden');
         }
-
-        if (duoNombre) {
-            document.getElementById('box-no-duo').classList.add('hidden');
-            document.getElementById('box-si-duo').classList.remove('hidden');
-            document.getElementById('txt-duo-nombre').innerText = duoNombre;
-            document.getElementById('duo-my-name').innerText = usuarioActual.nombre;
-            document.getElementById('duo-my-avatar').src = avatarUrl;
-            document.getElementById('txt-duo-pts').innerText = duoPuntos;
-        }
-
-        actualizarMarcador();
+        actualizarUI();
     }
 
-    function cerrarSesion() {
-        localStorage.removeItem('ff_sesion');
-        location.reload();
+    function actualizarUI() {
+        document.getElementById('ui-diamantes').innerText = user.balance + " 💎";
     }
 
-    function toggleOcultarDiamantes() {
-        diamantesOcultos = !diamantesOcultos;
-        actualizarMarcador();
-    }
-
-    function actualizarMarcador() {
-        document.getElementById('val-attcoins').innerText = attCoins.toLocaleString() + ' 🪙';
-        document.getElementById('val-diamantes').innerText = diamantesOcultos ? '**** 💎' : diamantes.toLocaleString() + ' 💎';
-        document.getElementById('val-vouchers').innerText = vouchers.toLocaleString() + ' 🎟️';
-        
-        localStorage.setItem('ff_attcoins', attCoins);
-        localStorage.setItem('ff_diamantes', diamantes);
-        localStorage.setItem('ff_vouchers', vouchers);
-    }
-
-    // DÚO DINÁMICO GRATIS CON INTERFAZ VIP
-    function vincularDuoGratis() {
-        const nom = document.getElementById('input-duo-nombre').value.trim();
-        if (!nom) return alert("Ingresa el nombre de tu pareja de batalla.");
-
-        duoNombre = nom;
-        diamantes += 100;
-        vouchers += 5;
-        localStorage.setItem('ff_duo_name', duoNombre);
-        
-        alert(`💞 ¡Dúo Vinculado GRATIS con ${duoNombre}! Ganaste +100 💎 y +5 🎟️ Vouchers.`);
-        cargarPanelJuego();
-    }
-
-    function enviarRegaloDuo() {
-        duoPuntos += 50;
-        localStorage.setItem('ff_duo_pts', duoPuntos);
-        document.getElementById('txt-duo-pts').innerText = duoPuntos;
-        alert(`🎁 ¡Le enviaste un regalo especial a tu Dúo ${duoNombre}! +50 PTS de Afinidad.`);
-    }
-
-    // GALERÍA DE TIRO
-    function dispararBlanco() {
-        puntosTiro += 10;
-        diamantes += 5;
-        if (puntosTiro % 50 === 0) vouchers += 1; // 1 voucher cada 50 puntos
-
-        document.getElementById('txt-puntos-tiro').innerText = puntosTiro;
-        
-        const target = document.getElementById('target');
-        target.style.top = (Math.floor(Math.random() * 65) + 10) + '%';
-        target.style.left = (Math.floor(Math.random() * 65) + 10) + '%';
-
-        actualizarMarcador();
-    }
-
-    // VOTACIÓN OFFLINE Y ONLINE
-    function votarJuegoOffline(voto) {
-        alert(`📡 ¡Voto Offline Guardado con Éxito!: ${voto}`);
-    }
-
-    function votarJuego(voto) {
-        alert(`⭐ ¡Gracias por votar!: ${voto}`);
-    }
-
-    function guardarControles() {
-        alert("🎮 ¡Controles HUD guardados correctamente!");
-    }
-
-    function ejecutarAccionAdmin() {
-        const target = document.getElementById('admin-target-user').value.trim();
-        const accion = document.getElementById('admin-action-type').value;
-        const cantidad = parseInt(document.getElementById('admin-amount').value) || 0;
-
-        if (target.toLowerCase() === usuarioActual.nombre.toLowerCase()) {
-            if (accion === 'add_diamonds') diamantes += cantidad;
-            if (accion === 'add_vouchers') vouchers += cantidad;
-            if (accion === 'add_coins') attCoins += cantidad;
-            actualizarMarcador();
-            alert(`✅ Recibiste ${cantidad} unidades de recurso.`);
+    function canjear(costo) {
+        if(user.balance >= costo) {
+            user.balance -= costo;
+            actualizarUI();
+            alert("✅ Canje Exitoso");
+        } else {
+            alert("❌ Saldo insuficiente");
         }
     }
 
-    function mostrarSeccion(sec) {
-        ['duo', 'offline', 'armas', 'controles', 'admin', 'ajustes'].forEach(s => {
-            const el = document.getElementById('sec-' + s);
-            if (el) el.classList.add('hidden');
-        });
-        document.getElementById('sec-' + sec).classList.remove('hidden');
+    function darDiamantes(cant) {
+        user.balance += cant;
+        actualizarUI();
+    }
+
+    function subirDuoMax() {
+        alert("⚡ Dúo Dinámico configurado a NIVEL MÁXIMO");
+    }
+
+    function toggleSonido() {
+        sonido = !sonido;
+        alert(sonido ? "🔊 Efectos de Sonido ACTIVADOS" : "🔇 Efectos de Sonido DESACTIVADOS");
+    }
+
+    function mostrar(id) {
+        document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
     }
 </script>
-
 </body>
 </html>
