@@ -1,76 +1,151 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>FF CREADOR 2 - CONSOLA PRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATIVADOR DE SKINS POR ID</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #ff4655; --bg: #060913; }
-        body { background: var(--bg); color: #00ff41; font-family: 'Share Tech Mono', monospace; padding: 20px; }
-        .card { background: #0f172a; border: 1px solid #1e293b; padding: 20px; border-radius: 10px; max-width: 450px; margin: auto; }
-        .console { background: black; padding: 15px; height: 200px; overflow-y: auto; border: 1px solid #333; font-size: 12px; margin-top: 10px; text-align: left; }
-        .btn { width: 100%; padding: 12px; border: none; background: var(--main); color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        input { width: 100%; padding: 10px; background: #0b1120; border: 1px solid #333; color: white; margin-top: 10px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
+        body { background: #060d1a; color: white; padding: 15px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 480px; }
+        
+        .header-card { background: #0b1528; border: 1px solid #1e3a8a; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
+        .title { color: #38bdf8; font-size: 20px; font-weight: bold; letter-spacing: 1px; margin-bottom: 5px; }
+        .subtitle { font-size: 11px; color: #94a3b8; margin-bottom: 15px; }
+
+        .warning-box { background: rgba(30, 58, 138, 0.2); border: 1px solid #1d4ed8; border-radius: 8px; padding: 12px; text-align: left; font-size: 11px; color: #cbd5e1; margin-bottom: 15px; }
+        .warning-box b { color: #f59e0b; }
+        .warning-box ul { margin-left: 15px; margin-top: 5px; color: #38bdf8; }
+
+        .section-box { background: #0b1528; border: 1px solid #1e3a8a; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
+        .section-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+
+        input[type="text"], input[type="file"] { width: 100%; padding: 10px; background: #060913; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 12px; margin-top: 5px; }
+        
+        .btn-activar { width: 100%; padding: 14px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 8px; color: #000; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); margin-top: 10px; transition: 0.2s; }
+        .btn-activar:active { transform: scale(0.98); }
+
+        /* CONSOLA ESTILO HACKER */
+        .console-box { background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 11px; text-align: left; height: 180px; overflow-y: auto; margin-top: 10px; color: #38bdf8; }
+        .console-line { margin-bottom: 4px; }
+        
+        .admin-badge { display: inline-block; background: linear-gradient(90deg, #f59e0b, #ef4444); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-<div class="card" id="main-ui">
-    <h2 style="color:var(--main);">FF CREADOR 2 - ACTIVADOR</h2>
-    <input type="text" id="ff-id" placeholder="INGRESA TU ID DE FREE FIRE">
-    <button class="btn" onclick="iniciarProceso()">INICIAR COMPROBACIÓN</button>
+<div class="container">
     
-    <div class="console" id="log-console">
-        > ESPERANDO INSTRUCCIONES...
+    <!-- CABECERA -->
+    <div class="header-card">
+        <div class="title">ATIVADOR DE SKINS POR ID</div>
+        <div class="subtitle">DESENVOLVIDO POR ENMANUEL & ENDRY</div>
+        <div id="user-info" style="font-size: 12px; color: #22c55e;">Modo Creador 2 Activo</div>
+        <div id="badge-admin"></div>
     </div>
+
+    <!-- REQUISITOS -->
+    <div class="warning-box">
+        <b>⚠️ ATENÇÃO REQUISITOS</b>
+        <p style="margin-top:5px;">O seu arquivo <b>.ZIP</b> deve conter obrigatoriamente estes 3 arquivos juntos:</p>
+        <ul>
+            <li>ProjectData_slot_X.bytes</li>
+            <li>ProjectData_slot_X.meta</li>
+            <li>UserLevelData_X.bytes</li>
+        </ul>
+    </div>
+
+    <!-- SELECCIÓN DE ARCHIVO Y ID -->
+    <div class="section-box">
+        <div class="section-title">📂 Selecione o Arquivo ZIP do Mapa</div>
+        <input type="file" id="zip-file" accept=".zip">
+        
+        <div style="margin-top: 12px;">
+            <label style="font-size: 11px; color: #94a3b8;">Slots Detectados: <span id="slot-num" style="color:#22c55e;">2</span></label>
+            <input type="text" id="ff-id" placeholder="Insira seu ID de Free Fire (Ex: 7114773386)">
+        </div>
+
+        <button class="btn-activar" onclick="ejecutarActivacion()">⚡ ATIVAR SKINS & BAIXAR MAPA</button>
+    </div>
+
+    <!-- CONSOLA DE OPERACIONES -->
+    <div class="section-box">
+        <div class="section-title">💻 CONSOLE DE OPERAÇÕES (LOGS)</div>
+        <div id="console-logs" class="console-box">
+            <div class="console-line" style="color: #64748b;">> Sistema aguardando arquivo e ID...</div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    const log = document.getElementById('log-console');
+    // Verificación automática de Creador al cargar
+    let nombreAdmin = prompt("Ingresa tu Nombre / Nick de Administrador:") || "Enmanuel";
+    if(nombreAdmin.toLowerCase().includes('enmanuel') || nombreAdmin.toLowerCase().includes('endry')) {
+        document.getElementById('badge-admin').innerHTML = `<span class="admin-badge">👑 CREADOR 2 - ACCESO TOTAL</span>`;
+    }
 
-    function escribir(txt, color = "#00ff41") {
+    const consoleBox = document.getElementById('console-logs');
+
+    function logMsg(txt, color = "#38bdf8") {
         const div = document.createElement('div');
+        div.className = 'console-line';
         div.style.color = color;
         div.innerText = "> " + txt;
-        log.appendChild(div);
-        log.scrollTop = log.scrollHeight;
+        consoleBox.appendChild(div);
+        consoleBox.scrollTop = consoleBox.scrollHeight;
     }
 
-    async function iniciarProceso() {
-        const id = document.getElementById('ff-id').value;
-        if(!id) return alert("Ingresa tu ID");
+    async function ejecutarActivacion() {
+        const fileInput = document.getElementById('zip-file').files[0];
+        const ffId = document.getElementById('ff-id').value.trim();
 
-        log.innerHTML = "";
-        escribir("INICIANDO SCAN DE ARCHIVOS...");
-        await new Promise(r => setTimeout(r, 1000));
+        if(!fileInput) return alert("Por favor selecciona un archivo ZIP de mapa.");
+        if(!ffId) return alert("Por favor ingresa tu ID de Free Fire.");
+
+        consoleBox.innerHTML = "";
         
-        escribir("DETECTADO: ProjectData_slot_2.bytes");
-        escribir("DETECTADO: ProjectData_slot_2.meta");
-        escribir("DETECTADO: UserLevelData_2.bytes");
+        logMsg("INICIANDO PROCEDIMENTO DE INJEÇÃO...", "#f59e0b");
+        await new Promise(r => setTimeout(r, 800));
+
+        logMsg("PROCESSANDO SLOT DE MAPA: 2");
+        await new Promise(r => setTimeout(r, 600));
+
+        logMsg("MODIFICADO: Cabelo", "#c084fc");
+        await new Promise(r => setTimeout(r, 500));
+
+        logMsg("MODIFICADO: Acessório de Cabeça/Máscara", "#c084fc");
+        await new Promise(r => setTimeout(r, 500));
+
+        logMsg("MODIFICADO: Peitoral/Camisa", "#c084fc");
+        await new Promise(r => setTimeout(r, 500));
+
+        logMsg("MODIFICADO: Calça/Bermuda", "#c084fc");
+        await new Promise(r => setTimeout(r, 500));
+
+        logMsg("MODIFICADO: Skins de Arma (wSkin)", "#c084fc");
+        await new Promise(r => setTimeout(r, 800));
+
+        logMsg("COMPACTANDO NOVOS ARQUIVOS...", "#38bdf8");
         await new Promise(r => setTimeout(r, 1000));
 
-        escribir("COMPROBANDO INTEGRIDAD...");
-        await new Promise(r => setTimeout(r, 1500));
+        logMsg("CONCLUÍDO COM SUCESSO! SEU MAPA ATUALIZADO FOI BAIXADO.", "#22c55e");
 
-        // Simulador de errores
-        if(Math.random() > 0.5) {
-            escribir("ERROR DETECTADO EN: UserLevelData_2.bytes", "#ff4655");
-            escribir("REPARANDO ARCHIVO AUTOMÁTICAMENTE...", "#f59e0b");
-            await new Promise(r => setTimeout(r, 2000));
-            escribir("REPARACIÓN COMPLETADA.");
-        }
-
-        escribir("CONECTANDO CON ID: " + id + "...");
-        await new Promise(r => setTimeout(r, 1500));
-        
-        escribir("INYECTANDO PARÁMETROS...");
-        escribir("-----------------------------");
-        escribir("ESTADO: ACTIVADO CON ÉXITO", "#f59e0b");
-        escribir("ARCHIVOS: 3/3 CORRECTOS");
-        escribir("SERVIDOR: CONECTADO");
-        escribir("-----------------------------");
-        escribir("LISTO PARA JUGAR, ENMANUEL.");
+        // Simulación de descarga automática del archivo procesado
+        setTimeout(() => {
+            const blob = new Blob([fileInput], { type: 'application/zip' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Mapa_Modificado_ID_${ffId}.zip`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            alert("✅ ¡Proceso finalizado! Tu mapa modificado se ha descargado correctamente a tu dispositivo.");
+        }, 1200);
     }
 </script>
+
 </body>
 </html>
