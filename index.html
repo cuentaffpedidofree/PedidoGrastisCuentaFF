@@ -24,7 +24,7 @@
 
         .container {
             background-color: #1e293b;
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             width: 100%;
@@ -49,7 +49,7 @@
             color: #94a3b8;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
             border-radius: 6px;
@@ -59,7 +59,7 @@
             font-size: 14px;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #38bdf8;
         }
@@ -81,26 +81,16 @@
             background-color: #0369a1;
         }
 
-        .admin-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #64748b;
-            text-decoration: none;
-            font-size: 12px;
-            cursor: pointer;
+        .nav-btn {
+            background-color: #334155;
+            margin-bottom: 15px;
         }
 
-        .admin-link:hover {
-            color: #94a3b8;
-        }
-
-        /* Modal / Paneles */
         .hidden {
             display: none;
         }
 
-        .request-card {
+        .card {
             background-color: #0f172a;
             border: 1px solid #334155;
             padding: 15px;
@@ -108,7 +98,7 @@
             margin-bottom: 10px;
         }
 
-        .request-card p {
+        .card p {
             margin-bottom: 5px;
             font-size: 14px;
         }
@@ -121,6 +111,10 @@
             font-size: 12px;
         }
 
+        .badge-region {
+            background-color: #d97706;
+        }
+
         .alert {
             padding: 10px;
             background-color: #15803d;
@@ -129,18 +123,57 @@
             text-align: center;
             margin-bottom: 15px;
         }
+
+        .chat-box {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            margin-bottom: 10px;
+        }
+
+        .chat-msg {
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .msg-user {
+            background-color: #1e293b;
+            border-left: 3px solid #38bdf8;
+        }
+
+        .msg-admin {
+            background-color: #0369a1;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .admin-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #64748b;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
 
-    <!-- SECCIÓN: FORMULARIO PÚBLICO -->
+    <!-- VISTA 1: PEDIR CUENTA (PÚBLICO) -->
     <div id="public-section">
         <h1>Pedir Cuenta Free Fire</h1>
+        
         <div id="success-alert" class="alert hidden">
-            ¡Solicitud enviada con éxito! Espera a que el creador te entregue los datos.
+            ¡Solicitud enviada! Revisa el chat abajo o espera tu cuenta.
         </div>
+
         <form id="request-form">
             <div class="form-group">
                 <label for="username">Tu Nombre / Apodo:</label>
@@ -153,15 +186,21 @@
             </div>
 
             <div class="form-group">
-                <label for="contact">Medio de Contacto (WhatsApp o Email):</label>
-                <input type="text" id="contact" required placeholder="+57 300 000 0000 o correo@email.com">
+                <label for="region">Selecciona la Región:</label>
+                <select id="region" required>
+                    <option value="Indonesia">Indonesia 🇮🇩</option>
+                    <option value="EE.UU. / EE.UU">EE.UU. (US) 🇺🇸</option>
+                    <option value="Sudamérica (SAC)">Sudamérica (SAC) 🌎</option>
+                    <option value="Europa">Europa 🇪🇺</option>
+                    <option value="Brasil">Brasil 🇧🇷</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="pack">Selecciona el Pack / Tipo de Cuenta:</label>
+                <label for="pack">Tipo de Cuenta / Pack:</label>
                 <select id="pack" required>
-                    <option value="Pack Indonesia Chetada">Pack Indonesia (Cuenta Chetada)</option>
-                    <option value="Cuenta Perdí Mi Cuenta">Recuperación / Perdí mi cuenta</option>
+                    <option value="Cuenta Chetada / Full Pack">Cuenta Chetada (Full Pack)</option>
+                    <option value="Recuperación / Perdí mi cuenta">Recuperación / Perdí mi cuenta</option>
                     <option value="Cuenta Básica Gratis">Cuenta Básica Gratis</option>
                 </select>
             </div>
@@ -169,36 +208,60 @@
             <button type="submit">Pedir Cuenta</button>
         </form>
 
-        <span class="admin-link" onclick="showAdminLogin()">Acceso Creador (Admin)</span>
+        <hr style="border-color: #334155; margin: 20px 0;">
+
+        <!-- SECCIÓN DE CHAT CON EL CREADOR -->
+        <h2>Escribir al Creador</h2>
+        <div id="user-chat-box" class="chat-box">
+            <!-- Mensajes del chat público -->
+        </div>
+
+        <form id="chat-form">
+            <div class="form-group">
+                <input type="text" id="chat-sender" placeholder="Tu Nombre" required style="margin-bottom: 5px;">
+                <input type="text" id="chat-message" placeholder="Escribe un mensaje al creador..." required>
+            </div>
+            <button type="submit" style="background-color: #059669;">Enviar Mensaje</button>
+        </form>
+
+        <span class="admin-link" onclick="showAdminLogin()">Acceso Privado Creador</span>
     </div>
 
-    <!-- SECCIÓN: LOGIN DE ADMINISTRADOR -->
+    <!-- VISTA 2: LOGIN ADMINISTRADOR -->
     <div id="admin-login-section" class="hidden">
-        <h2>Acceso de Creador</h2>
+        <h2>Panel de Acceso</h2>
         <form id="login-form">
             <div class="form-group">
                 <label for="admin-user">Usuario:</label>
-                <input type="text" id="admin-user" placeholder="endry" required>
+                <input type="text" id="admin-user" required placeholder="Usuario">
             </div>
             <div class="form-group">
                 <label for="admin-pass">Contraseña:</label>
-                <input type="password" id="admin-pass" placeholder="1234" required>
+                <input type="password" id="admin-pass" required placeholder="Contraseña">
             </div>
-            <button type="submit">Entrar al Panel</button>
-            <button type="button" onclick="showPublicForm()" style="background-color: #475569;">Volver</button>
+            <button type="submit">Iniciar Sesión</button>
+            <button type="button" class="nav-btn" onclick="showPublicForm()">Volver</button>
         </form>
     </div>
 
-    <!-- SECCIÓN: PANEL DEL CREADOR (ADMIN) -->
+    <!-- VISTA 3: PANEL DEL CREADOR (ADMIN) -->
     <div id="admin-panel-section" class="hidden">
-        <h2>Panel de Solicitudes Recibidas</h2>
-        <p style="text-align: center; color: #94a3b8; font-size: 12px; margin-bottom: 15px;">
-            Aquí ves las cuentas que te han pedido los usuarios.
-        </p>
+        <h2>Panel del Creador</h2>
 
-        <div id="requests-list">
-            <!-- Las solicitudes se cargan dinámicamente aquí -->
-        </div>
+        <!-- SOLICITUDES RECIBIDAS -->
+        <h3 style="color: #38bdf8; margin-bottom: 10px; font-size: 16px;">Cuentas Pedidas:</h3>
+        <div id="requests-list"></div>
+
+        <hr style="border-color: #334155; margin: 20px 0;">
+
+        <!-- MENSAJES DEL CHAT -->
+        <h3 style="color: #38bdf8; margin-bottom: 10px; font-size: 16px;">Mensajes de Usuarios:</h3>
+        <div id="admin-chat-box" class="chat-box"></div>
+
+        <form id="admin-reply-form" style="margin-bottom: 15px;">
+            <input type="text" id="reply-msg" placeholder="Responder en el chat público..." required style="margin-bottom: 5px;">
+            <button type="submit" style="background-color: #d97706;">Responder Mensaje</button>
+        </form>
 
         <button onclick="logoutAdmin()" style="background-color: #b91c1c;">Cerrar Sesión</button>
     </div>
@@ -206,7 +269,7 @@
 </div>
 
 <script>
-    // Configuración del Administrador
+    // Credenciales del Administrador
     const ADMIN_USER = "endry";
     const ADMIN_PASS = "1234";
 
@@ -216,10 +279,10 @@
     const adminPanelSection = document.getElementById('admin-panel-section');
     const requestForm = document.getElementById('request-form');
     const loginForm = document.getElementById('login-form');
-    const requestsList = document.getElementById('requests-list');
-    const successAlert = document.getElementById('success-alert');
+    const chatForm = document.getElementById('chat-form');
+    const adminReplyForm = document.getElementById('admin-reply-form');
 
-    // Manejo de Navegación entre vistas
+    // Navegación
     function showAdminLogin() {
         publicSection.classList.add('hidden');
         adminLoginSection.classList.remove('hidden');
@@ -231,7 +294,7 @@
         publicSection.classList.remove('hidden');
     }
 
-    // 1. Guardar Solicitud (Autoguardado en LocalStorage)
+    // 1. Guardar Solicitud de Cuenta
     requestForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -239,73 +302,119 @@
             id: Date.now(),
             user: document.getElementById('username').value,
             accountName: document.getElementById('account-name').value,
-            contact: document.getElementById('contact').value,
+            region: document.getElementById('region').value,
             pack: document.getElementById('pack').value,
             date: new Date().toLocaleString()
         };
 
-        // Obtener solicitudes guardadas previa
         let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
         requests.push(newRequest);
-
-        // Auto-guardado
         localStorage.setItem('ff_requests', JSON.stringify(requests));
 
-        // Resetear Formulario
         requestForm.reset();
-        successAlert.classList.remove('hidden');
+        document.getElementById('success-alert').classList.remove('hidden');
 
         setTimeout(() => {
-            successAlert.classList.add('hidden');
+            document.getElementById('success-alert').classList.add('hidden');
         }, 4000);
     });
 
-    // 2. Sistema de Registro/Login Creador
+    // 2. Sistema de Chat (Envío de mensajes de usuarios)
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const sender = document.getElementById('chat-sender').value;
+        const msg = document.getElementById('chat-message').value;
+
+        addChatMessage(sender, msg, 'user');
+        document.getElementById('chat-message').value = '';
+        renderChats();
+    });
+
+    // Respuesta del Administrador
+    adminReplyForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const msg = document.getElementById('reply-msg').value;
+
+        addChatMessage('Creador (Endry)', msg, 'admin');
+        document.getElementById('reply-msg').value = '';
+        renderChats();
+    });
+
+    function addChatMessage(sender, text, type) {
+        let chats = JSON.parse(localStorage.getItem('ff_chats')) || [];
+        chats.push({ sender, text, type, time: new Date().toLocaleTimeString() });
+        localStorage.setItem('ff_chats', JSON.stringify(chats));
+    }
+
+    function renderChats() {
+        let chats = JSON.parse(localStorage.getItem('ff_chats')) || [];
+        const userBox = document.getElementById('user-chat-box');
+        const adminBox = document.getElementById('admin-chat-box');
+
+        let html = '';
+        if(chats.length === 0) {
+            html = '<p style="font-size:12px; color:#64748b;">No hay mensajes aún.</p>';
+        } else {
+            chats.forEach(c => {
+                html += `<div class="chat-msg ${c.type === 'admin' ? 'msg-admin' : 'msg-user'}">
+                    <strong>${c.sender}:</strong> ${c.text}
+                </div>`;
+            });
+        }
+
+        userBox.innerHTML = html;
+        adminBox.innerHTML = html;
+        userBox.scrollTop = userBox.scrollHeight;
+        adminBox.scrollTop = adminBox.scrollHeight;
+    }
+
+    // 3. Login de Creador
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const userInput = document.getElementById('admin-user').value;
-        const passInput = document.getElementById('admin-pass').value;
+        const user = document.getElementById('admin-user').value;
+        const pass = document.getElementById('admin-pass').value;
 
-        if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
+        if (user === ADMIN_USER && pass === ADMIN_PASS) {
             adminLoginSection.classList.add('hidden');
             adminPanelSection.classList.remove('hidden');
-            loadRequests();
+            loadAdminData();
         } else {
             alert("Usuario o contraseña incorrectos.");
         }
     });
 
-    // 3. Cargar lista de solicitudes en el panel del creador
-    function loadRequests() {
+    function loadAdminData() {
+        // Cargar Solicitudes
+        const requestsList = document.getElementById('requests-list');
         requestsList.innerHTML = '';
         let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
 
         if (requests.length === 0) {
-            requestsList.innerHTML = '<p style="text-align:center; color: #64748b;">No hay solicitudes pendientes.</p>';
-            return;
+            requestsList.innerHTML = '<p style="color: #64748b; font-size:13px;">No hay cuentas pedidas pendientes.</p>';
+        } else {
+            requests.forEach((req) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <p><strong>Usuario:</strong> ${req.user}</p>
+                    <p><strong>Nombre Cuenta:</strong> ${req.accountName}</p>
+                    <p><strong>Región:</strong> <span class="badge badge-region">${req.region}</span></p>
+                    <p><strong>Pack:</strong> <span class="badge">${req.pack}</span></p>
+                    <p style="font-size:11px; color:#64748b; margin-top:5px;">${req.date}</p>
+                    <button onclick="deleteRequest(${req.id})" style="background-color: #ef4444; padding: 5px; font-size: 12px; margin-top:8px;">Marcar como Entregada / Borrar</button>
+                `;
+                requestsList.appendChild(card);
+            });
         }
 
-        requests.forEach((req, index) => {
-            const card = document.createElement('div');
-            card.className = 'request-card';
-            card.innerHTML = `
-                <p><strong>Usuario:</strong> ${req.user}</p>
-                <p><strong>Nombre Cuenta Deseada:</strong> ${req.accountName}</p>
-                <p><strong>Contacto:</strong> ${req.contact}</p>
-                <p><strong>Tipo/Pack:</strong> <span class="badge">${req.pack}</span></p>
-                <p style="font-size:11px; color:#64748b; margin-top:5px;">Fecha: ${req.date}</p>
-                <button onclick="deleteRequest(${req.id})" style="background-color: #ef4444; padding: 5px; margin-top: 8px; font-size: 12px;">Marcar como Entregada / Borrar</button>
-            `;
-            requestsList.appendChild(card);
-        });
+        renderChats();
     }
 
-    // Borrar Solicitud entregada
     function deleteRequest(id) {
         let requests = JSON.parse(localStorage.getItem('ff_requests')) || [];
         requests = requests.filter(req => req.id !== id);
         localStorage.setItem('ff_requests', JSON.stringify(requests));
-        loadRequests();
+        loadAdminData();
     }
 
     function logoutAdmin() {
@@ -313,8 +422,10 @@
         publicSection.classList.remove('hidden');
         loginForm.reset();
     }
+
+    // Inicializar chat al cargar
+    renderChats();
 </script>
 
 </body>
-                  </html>
-          
+</html>
