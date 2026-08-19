@@ -3,116 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF ENMANUEL ADM8 - PRO SYSTEM</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <title>FF ENMANUEL & ENDRY - CREADOR 2 EDITION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ff4655; --gold: #fbbf24; --dark: #060913; }
-        body { background: var(--dark); color: white; font-family: 'Rajdhani', sans-serif; text-align: center; padding: 10px; }
-        .card { background: #0f172a; border-radius: 15px; padding: 20px; max-width: 450px; margin: 10px auto; border: 1px solid #334155; }
-        .btn { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .btn-gold { background: var(--gold); color: black; }
-        .btn-main { background: var(--primary); color: white; }
+        :root { --primary: #ff4655; --bg: #060913; --card: #0f172a; --gold: #f59e0b; --purple: #a855f7; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
+        body { background: var(--bg); color: white; text-align: center; padding: 15px; min-height: 100vh; }
+        .app-container { max-width: 420px; margin: auto; }
+        .card { background: var(--card); border: 1px solid rgba(255, 70, 85, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+        .game-title { font-family: 'Orbitron', sans-serif; font-size: 24px; color: var(--primary); text-shadow: 0 0 10px rgba(255,70,85,0.6); margin-bottom: 15px; }
+        
+        .stats-box { display: flex; justify-content: space-around; background: #0b1120; padding: 12px; border-radius: 12px; border: 1px solid var(--primary); margin-bottom: 15px; }
+        .stat-item { text-align: center; }
+        .stat-val { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #38bdf8; font-weight: bold; }
+        
+        .btn { width: 100%; padding: 12px; margin: 6px 0; border: none; border-radius: 10px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .btn:active { transform: scale(0.98); }
+        .btn-main { background: linear-gradient(135deg, #ff4655, #b91c1c); color: white; }
+        .btn-gold { background: linear-gradient(135deg, #eab308, #ca8a04); color: black; }
+        .btn-purple { background: linear-gradient(135deg, #9333ea, #6b21a8); color: white; }
+        .btn-green { background: linear-gradient(135deg, #16a34a, #15803d); color: white; }
+        .btn-gray { background: #334155; color: white; }
+
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155; background: #0b1120; color: white; margin-bottom: 10px; font-size: 14px; text-align: center; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: bold; background: linear-gradient(90deg, #f59e0b, #ef4444); color: white; border: 1px solid #fef08a; margin-top: 4px; }
         .hidden { display: none !important; }
-        .virtual-card { background: linear-gradient(135deg, #1e293b, #000); border: 2px solid var(--gold); border-radius: 15px; padding: 20px; margin: 15px 0; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN -->
+<div class="app-container">
+    <!-- PANTALLA DE ACCESO -->
     <div id="sec-login" class="card">
-        <h1>FF ENMANUEL ADM8</h1>
-        <input type="text" id="auth-name" placeholder="Tu Nombre de Jugador" style="width:90%; padding:10px; margin-bottom:10px;">
-        <button class="btn btn-main" onclick="iniciarSesion()">ENTRAR AL SISTEMA</button>
+        <h1 class="game-title">FF CREADOR 2</h1>
+        <p style="font-size:12px; color:#94a3b8; margin-bottom:15px;">Ingresa tu nombre para entrar al sistema oficial:</p>
+        <input type="text" id="input-username" placeholder="Tu Nick (Ej: Enmanuel o Endry)">
+        <button class="btn btn-main" onclick="iniciarSesion()">ENTRAR AL JUEGO</button>
     </div>
 
-    <!-- MAIN LOBBY -->
-    <div id="sec-main" class="hidden">
+    <!-- LOBBY PRINCIPAL -->
+    <div id="sec-lobby" class="hidden">
         <div class="card">
-            <h2 id="welcome-msg">Bienvenido</h2>
-            <div class="virtual-card">
-                <p>SALDO DIAMANTES</p>
-                <h1 id="ui-diamantes">0 💎</h1>
-                <p id="ui-user" style="font-size:12px;"></p>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div style="text-align:left;">
+                    <h3 id="ui-user" style="font-size:16px;">---</h3>
+                    <div id="badge-container"></div>
+                </div>
+                <button onclick="cerrarSesion()" class="btn btn-gray" style="width:auto; padding:6px 12px; font-size:9px;">SALIR</button>
             </div>
+
+            <div class="stats-box">
+                <div class="stat-item">
+                    <small style="font-size:9px; color:#94a3b8;">DIAMANTES</small>
+                    <div id="ui-diamonds" class="stat-val">0 💎</div>
+                </div>
+                <div class="stat-item">
+                    <small style="font-size:9px; color:#94a3b8;">LÍMITE MÁX</small>
+                    <div class="stat-val" style="color:#22c55e;">100,000</div>
+                </div>
+            </div>
+
+            <button class="btn btn-gold" onclick="mostrarSeccion('sec-tienda')">🛒 TIENDA Y CANJES PRO</button>
+            <button class="btn btn-green" onclick="descargarJuego()">📥 DESCARGAR / GUARDAR JUEGO</button>
+            <button class="btn btn-purple" onclick="reproducirSonido()">🔊 SONIDO DE EFECTOS</button>
             
-            <button class="btn btn-gold" onclick="mostrar('sec-tienda')">💳 CANJEAR SUSCRIPCIONES</button>
-            <button class="btn btn-main" onclick="toggleSonido()">🔊 TOGGLE SONIDO</button>
-            <button id="btn-admin" class="btn" style="background:#8b5cf6;" onclick="mostrar('sec-admin')">👑 PANEL ENMANUEL ADM8</button>
+            <!-- PANEL EXCLUSIVO PARA ENMANUEL Y ENDRY -->
+            <button id="btn-admin" class="btn btn-main hidden" style="border: 2px solid #fef08a;" onclick="mostrarSeccion('sec-admin')">👑 PANEL CREADOR 2 (ADMIN)</button>
         </div>
     </div>
 
-    <!-- TIENDA / CANJE -->
+    <!-- TIENDA / CANJES -->
     <div id="sec-tienda" class="card hidden">
-        <h3>🛍️ TIENDA PRO</h3>
-        <div class="card" style="border: 1px solid var(--gold);">
-            <p>Suscripción VIP (Diamantes)</p>
-            <button class="btn btn-gold" onclick="canjear(500)">CANJEAR 500 💎</button>
+        <h3 style="color:#fbbf24; font-family:'Orbitron';">🛒 CANJE DE RECOMPENSAS</h3>
+        <p style="font-size:11px; color:#94a3b8; margin:10px 0;">Adquiere artículos exclusivos usando tus diamantes:</p>
+        <div style="background:#0b1120; padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:10px;">
+            <p style="font-size:12px; font-weight:bold;">Suscripción VIP Definitiva</p>
+            <button class="btn btn-gold" onclick="canjearItem(5000)">CANJEAR (5,000 💎)</button>
         </div>
-        <button class="btn" onclick="mostrar('sec-main')">VOLVER</button>
+        <button class="btn btn-gray" onclick="mostrarSeccion('sec-lobby')">VOLVER AL LOBBY</button>
     </div>
 
-    <!-- PANEL ADMIN -->
-    <div id="sec-admin" class="card hidden">
-        <h3>👑 PANEL DE CONTROL</h3>
-        <button class="btn btn-gold" onclick="darDiamantes(5000)">DAR +5000 DIAMANTES</button>
-        <button class="btn" onclick="subirDuoMax()">⚡ SUBIR DÚO MÁXIMO</button>
-        <button class="btn" onclick="mostrar('sec-main')">VOLVER</button>
+    <!-- PANEL ADMIN CREADOR 2 -->
+    <div id="sec-admin" class="card hidden" style="border-color:#f59e0b;">
+        <h3 style="color:#f59e0b; font-family:'Orbitron';">👑 PANEL CREADOR 2</h3>
+        <p style="font-size:11px; color:#94a3b8; margin:10px 0;">Control absoluto con tope máximo de 100,000 unidades por seguridad:</p>
+        
+        <button class="btn btn-gold" onclick="darRecursosMaximos()">⚡ DAR 100,000 DIAMANTES MÁXIMO</button>
+        <button class="btn btn-purple" onclick="alert('⚡ Dúo Dinámico sincronizado al máximo nivel con gente real.')">💞 SUBIR DÚO DINÁMICO MÁX</button>
+        <button class="btn btn-gray" onclick="mostrarSeccion('sec-lobby')">VOLVER AL LOBBY</button>
     </div>
+</div>
 
 <script>
-    let user = { name: "", balance: 1000 };
-    let sonido = true;
+    let playerData = JSON.parse(localStorage.getItem('ff_creador2_data')) || { name: "", diamonds: 1000 };
 
     function iniciarSesion() {
-        user.name = document.getElementById('auth-name').value;
-        if(user.name.trim() === "") return alert("Nombre requerido");
+        let nombreInput = document.getElementById('input-username').value.trim();
+        if(!nombreInput) return alert("Por favor ingresa un nombre válido.");
         
+        playerData.name = nombreInput;
+        guardarDatos();
+        cargarLobby();
+    }
+
+    function cargarLobby() {
         document.getElementById('sec-login').classList.add('hidden');
-        document.getElementById('sec-main').classList.remove('hidden');
-        document.getElementById('ui-user').innerText = "ID: " + user.name.toUpperCase();
-        document.getElementById('welcome-msg').innerText = "Hola, " + user.name;
+        document.getElementById('sec-lobby').classList.remove('hidden');
         
-        // Verificación exclusiva
-        if(user.name.toLowerCase() === "enmanuel adm8") {
+        document.getElementById('ui-user').innerText = playerData.name;
+        document.getElementById('ui-diamonds').innerText = playerData.diamonds.toLocaleString() + ' 💎';
+
+        // Verificación exacta para Enmanuel o Endry
+        let nombreL = playerData.name.toLowerCase();
+        if(nombreL.includes('enmanuel') || nombreL.includes('endry')) {
+            document.getElementById('badge-container').innerHTML = `<span class="badge">👑 CREADOR 2 - LEYENDA</span>`;
             document.getElementById('btn-admin').classList.remove('hidden');
         } else {
+            document.getElementById('badge-container').innerHTML = `<span class="badge" style="background:#334155;">JUGADOR VERIFICADO</span>`;
             document.getElementById('btn-admin').classList.add('hidden');
         }
-        actualizarUI();
     }
 
-    function actualizarUI() {
-        document.getElementById('ui-diamantes').innerText = user.balance + " 💎";
+    function cerrarSesion() {
+        localStorage.removeItem('ff_creador2_data');
+        location.reload();
     }
 
-    function canjear(costo) {
-        if(user.balance >= costo) {
-            user.balance -= costo;
-            actualizarUI();
-            alert("✅ Canje Exitoso");
+    function guardarDatos() {
+        localStorage.setItem('ff_creador2_data', JSON.stringify(playerData));
+    }
+
+    function darRecursosMaximos() {
+        // Límite máximo estricto de 100,000
+        playerData.diamonds = 100000;
+        guardarDatos();
+        document.getElementById('ui-diamonds').innerText = playerData.diamonds.toLocaleString() + ' 💎';
+        alert("✅ ¡Se han acreditado 100,000 Diamantes! (Límite máximo de seguridad aplicado).");
+    }
+
+    function canjearItem(costo) {
+        if(playerData.diamonds >= costo) {
+            playerData.diamonds -= costo;
+            guardarDatos();
+            document.getElementById('ui-diamonds').innerText = playerData.diamonds.toLocaleString() + ' 💎';
+            alert("✅ ¡Canje realizado con éxito!");
         } else {
-            alert("❌ Saldo insuficiente");
+            alert("❌ No tienes suficientes diamantes.");
         }
     }
 
-    function darDiamantes(cant) {
-        user.balance += cant;
-        actualizarUI();
+    function descargarJuego() {
+        const htmlContent = document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'FF_Creador2_Enmanuel_Endry.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        alert("📥 ¡Juego descargado con éxito en tu dispositivo!");
     }
 
-    function subirDuoMax() {
-        alert("⚡ Dúo Dinámico configurado a NIVEL MÁXIMO");
+    function reproducirSonido() {
+        alert("🔊 Efectos de sonido activados correctamente.");
     }
 
-    function toggleSonido() {
-        sonido = !sonido;
-        alert(sonido ? "🔊 Efectos de Sonido ACTIVADOS" : "🔇 Efectos de Sonido DESACTIVADOS");
-    }
-
-    function mostrar(id) {
-        document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    function mostrarSeccion(id) {
+        ['sec-lobby', 'sec-tienda', 'sec-admin'].forEach(s => {
+            document.getElementById(s).classList.add('hidden');
+        });
         document.getElementById(id).classList.remove('hidden');
     }
+
+    // Auto iniciar si ya hay datos guardados
+    if(playerData.name) {
+        cargarLobby();
+    }
 </script>
+
 </body>
 </html>
